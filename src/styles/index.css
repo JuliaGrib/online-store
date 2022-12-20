@@ -2,6 +2,12 @@
   margin: 0;
   padding: 0;
 }
+
+body {
+  font-family: "Popins", sans-serif;
+  color: #34383b;
+}
+
 .header {
   padding: 20px 60px;
   display: flex;
