@@ -26,7 +26,8 @@ module.exports = {
     new HtmlWebpackPlugin({
         title: 'webpack Boilerplate',
         template: path.resolve(__dirname, './index.html'),
-        filename: 'index.html', 
+        filename: 'index.html',
+        scriptLoading: "blocking",
     }),
     new CleanWebpackPlugin(),
     new CopyPlugin({
