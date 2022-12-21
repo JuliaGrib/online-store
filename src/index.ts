@@ -5,5 +5,8 @@ import "./styles/cart.css"
 import "./route/route"
 import App from "./app/app"
 
+
 const app: App = new App();
 app.start();
+
+import "./app/header"
