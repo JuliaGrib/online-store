@@ -4,8 +4,15 @@
 //импортируем компонент из главного индекса во фреймворке
 import { WFModule } from '../framework/index'
 
-//импортируем компонент из app.component
+//импортируем корневой компонент из app.component
 import { appComponent } from './app.component'
+
+//импортируем компонент header
+import { appHeader } from './common/app.header'
+
+//импортируем массив роутев
+import { appRoutes } from './app.routes'
+
 
 
 
@@ -14,10 +21,6 @@ import { appComponent } from './app.component'
 class AppModule extends WFModule {
     constructor(config){
         super(config)
-        // вот что наследуется из модуля фремйворка
-        // this.components = config.components
-        // this.bootstrapComponent = config.bootstrap
-        // this.routes = config.routes
     }
 }
 
@@ -25,8 +28,14 @@ class AppModule extends WFModule {
 export const appModule = new AppModule({
     
     components: [
+        appComponent, //корневой компонент, который содержит все компоненты <app-root>
         //походу сюда кладем компоненты html
+        appHeader, //наш header
+        
               
     ],
     bootstrap: appComponent,
+    routes: appRoutes, //определяем новый объект в модуле,
+    //appRoutes - массив роутев
+
 })

@@ -29,7 +29,7 @@ export const appComponent = new AppComponent({
     selector: 'app-root', //app-root - корневой компонент который будет содержать все остальные компоненты
     //сам шаблон
     template: `
-        <app-header>hi</app-header>
+        <app-header></app-header>
         <router-outlet></router-outlet>
     `
 })
