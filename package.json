@@ -1,0 +1,31 @@
+{
+  "name": "myspa",
+  "version": "1.0.0",
+  "description": "Создаем новую основную ветку разработки",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "materialize-css": "^1.0.0-rc.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuliaGrib/online-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JuliaGrib/online-store/issues"
+  },
+  "homepage": "https://github.com/JuliaGrib/online-store#readme"
+}
