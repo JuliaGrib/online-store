@@ -1,0 +1,20 @@
+.container__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  height: 50px;
+  background-color: #e8f2e7;
+}
+
+.menu__header {
+  display: flex;
+  margin: 0;
+  padding: 0;
+
+}
+
+.item__header {
+  list-style: none;
+  margin-right: 20px;
+}
