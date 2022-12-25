@@ -8,5 +8,5 @@ class HomePageComponent extends WFMComponent {
 
 export const homePageComponent = new HomePageComponent({
     selector: 'app-home-page',
-    template: '<h1>Home Page</h1>'
+    template: '<img src="./assets/img.jpg" alt="image"><h1>Home Page</h1>'
 })
