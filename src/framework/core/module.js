@@ -1,5 +1,6 @@
 //из tools получаем функцию для роутера
 import { router } from "../tools/router";
+import { wfm } from "../tools/util";
 
 export class Module {
     constructor(config) {
@@ -34,6 +35,11 @@ export class Module {
     renderRoute() {
         let url = router.getUrl() //фукция из tools/route.js
         let route = this.routes.find(r => r.path === url) 
+
+        //если роут не найден то 404
+        if(wfm.isUdefined(route)){
+            route = this.routes.find(r => r.path === '**') 
+        }
 
         document.querySelector('router-outlet').innerHTML = `<${route.component.selector}></${route.component.selector}>`
         this.renderComponent(route.component)
