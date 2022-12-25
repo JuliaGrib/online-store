@@ -28,13 +28,14 @@ export class Module {
 
     initRoutes() {
         window.addEventListener('hashchange', this.renderRoute.bind(this))
+        this.renderRoute()//страница остается даже после перезагрузки
     }
 
     renderRoute() {
         let url = router.getUrl() //фукция из tools/route.js
         let route = this.routes.find(r => r.path === url) 
 
-        document.querySelector('router-outlet').innerHtml = `<${route.component.selector}></${route.component.selector}>`
+        document.querySelector('router-outlet').innerHTML = `<${route.component.selector}></${route.component.selector}>`
         this.renderComponent(route.component)
     }
 
