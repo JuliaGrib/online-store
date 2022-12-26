@@ -36,4 +36,19 @@ export class Component {
         })
     }
 
+    //не у всех компонентов есть методы actions, 
+    //поэтому проверяем есть ли в компоненте метод actions
+    _initEvents(){
+        if(wfm.isUdefined(this.actions)) return
+
+        //если метод событий есть, то получаем объект  actions
+        let actions = this.actions()
+
+        //Функции которые сработают при вызове
+        Object.keys(actions).forEach(key => {
+            (this[actions[key]])()
+        })
+
+    }
+
 }

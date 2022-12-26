@@ -4,22 +4,6 @@ import { WFMComponent } from "../framework/index";
 class AppComponent extends WFMComponent {
     constructor(config){
         super(config)
-
-        // вот что экспортировали
-
-        //шаблон
-        // this.template = config.template
-        // //селектор тега
-        // this.selector = config.selector
-        // this.el = null
-
-        // render(){
-        //     this.el = document.querySelector(this.selector)
-        //     if(!this.el) throw new Error(`Component with selector ${this.selector} wasnt found`)
-    
-        //     //в созданный селектор вставляем шаблон
-        //     this.el.innerHTML = this.template
-        // }
     }
 }
 
