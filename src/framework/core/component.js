@@ -16,7 +16,7 @@ export class Component {
 
         //в созданный селектор вставляем шаблон
         this.el.innerHTML = this.template
-
+        this._initActions()
         this._initEvents()
     }
 
@@ -24,21 +24,27 @@ export class Component {
     //поэтому проверяем есть ли в компоненте метод events
     _initEvents(){
         if(wfm.isUdefined(this.events)) return
-
+        
         //если метод событий есть, то получаем объект событий
         let events = this.events()
+        
 
         Object.keys(events).forEach(key => {
+            
             let listener = key.split(' ')
+
             this.el
-            .querySelector(listener[1])
-            .addEventListener([listener[0]], this[events[key]].bind(this))
+            .querySelectorAll(listener[1])
+            .forEach((elem)=> {
+                elem.addEventListener([listener[0]], this[events[key]].bind(this))
+            })
+            
         })
     }
 
     //не у всех компонентов есть методы actions, 
     //поэтому проверяем есть ли в компоненте метод actions
-    _initEvents(){
+    _initActions(){
         if(wfm.isUdefined(this.actions)) return
 
         //если метод событий есть, то получаем объект  actions

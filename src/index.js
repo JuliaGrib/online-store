@@ -13,5 +13,7 @@ import { bootstrap } from "./framework";
 //импорт итогового модуля, который будет запущен функцией bootstrap
 import { appModule } from "./app/app.module";
 
+import "./framework/tools/storage";
+
 
 bootstrap(appModule)
