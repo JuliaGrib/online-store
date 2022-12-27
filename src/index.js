@@ -7,6 +7,9 @@ import "./app/styles/404.css"
 //импортируем стиль хедера
 import "./app/styles/header.css"
 
+//импортируем стиль корзины
+import "./app/styles/cart.css"
+
 //импорт функции запуска модуля
 import { bootstrap } from "./framework";
 
