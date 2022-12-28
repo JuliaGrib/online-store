@@ -9,10 +9,12 @@ class CartPageComponent extends WFMComponent {
   arrayProducts = {};
   countOnceItem = [];
   totalPrice = 0;
+  totalProducts = 0;
 
   actions() {
     return {
         'makeCart': 'makeCart',
+        'checkPromo': 'checkPromo'
     }
   }
 
@@ -20,6 +22,7 @@ class CartPageComponent extends WFMComponent {
     return {
         'click .add-item__cart': 'addProductToCart',
         'click .remove-item__cart': 'removeProductFromCart',
+        'click .buy-now-button__cart' : 'buyNow',
     }
   }
 
@@ -46,6 +49,7 @@ class CartPageComponent extends WFMComponent {
     }, []); 
     //подсчёт общей цены
     //константы селекторов
+    const container = document.querySelector('.container__cart')
     const productsCart = document.querySelector('.item-products__cart');
     const countProductsCart = document.querySelector('.count-items__cart');
     const pageNumCart = document.querySelector('.pages-num__cart')
@@ -54,10 +58,9 @@ class CartPageComponent extends WFMComponent {
 
     countProductsCart.innerHTML = `Items: ${tempArrayProducts.length}`
     pageNumCart.innerHTML = tempArrayProducts.length%2;
-    totalProductsCart.innerHTML = `Products: ${tempArrayProducts.length}`;
 
     tempArrayProducts.forEach((elem, index) => {
-      
+
       let idProduct = elem.id
       let priceProduct = elem.price
 
@@ -74,8 +77,11 @@ class CartPageComponent extends WFMComponent {
       const addItem = document.createElement('button');
       const removeItem = document.createElement('button');
       const priceItem = document.createElement('div');
+      const stockItem = document.createElement('div')
+      
 
-      itemCart.classList.add('item__cart')
+      itemCart.classList.add(`item__cart`)
+      itemCart.classList.add(`item-${elem.id}__cart`)
       idItem.classList.add('id-item__cart')
       infoItem.classList.add('info-item__cart')
       imgItem.classList.add('img-item__cart')
@@ -88,6 +94,7 @@ class CartPageComponent extends WFMComponent {
       addItem.classList.add('add-item__cart')
       removeItem.classList.add('remove-item__cart')
       priceItem.classList.add(`price-item-${elem.id}__cart`)
+      stockItem.classList.add('stock-item__cart');
 
       itemCart.setAttribute('data-id', `${elem.id}`);
       addItem.setAttribute('data-id', `${elem.id}`);
@@ -101,6 +108,7 @@ class CartPageComponent extends WFMComponent {
       addItem.innerHTML = '+'
       removeItem.innerHTML = '-'
       priceItem.innerHTML = `${priceProduct * this.countOnceItem[idProduct]}$`
+      stockItem.innerHTML = `Stock: ${elem.stock}`
 
       productsCart.appendChild(itemCart);
 
@@ -114,6 +122,7 @@ class CartPageComponent extends WFMComponent {
       detailItem.appendChild(nameItem);
       detailItem.appendChild(descriptionItem);
 
+      additionalItem.appendChild(stockItem)
       additionalItem.appendChild(countItemContainer)
       additionalItem.appendChild(priceItem)
 
@@ -122,50 +131,205 @@ class CartPageComponent extends WFMComponent {
       countItemContainer.appendChild(removeItem)
 
       let totalItemPrice = elem.price * this.countOnceItem[idProduct]
-
-
       this.totalPrice = this.totalPrice + totalItemPrice
-
+      this.totalProducts = this.totalProducts + this.countOnceItem[idProduct]
     })
-    console.log(this.totalPrice)
     totalPriceCart.innerHTML = `Total price: ${this.totalPrice}$`
+    totalProductsCart.innerHTML = `Products: ${this.totalProducts}`;
   }
 
   addProductToCart(event) {
 
-
     let currentId = event.target.dataset.id
-    let currentItem = productsList.products.find(elem => elem.id == currentId);
+    let currentItem = this.arrayProducts.products.find(elem => elem.id == currentId);
+
+    if(this.countOnceItem[currentId] === currentItem.stock) {
+      return
+    }
+
     let localArr = JSON.parse( localStorage.productsLocal)
     localArr.products.push(currentItem);
     localStorage.productsLocal = JSON.stringify(localArr);
+
     const countItem = document.querySelector(`.count-item-${currentId}__cart`);
     const priceItem = document.querySelector(`.price-item-${currentId}__cart`);
+    const totalPriceCart = document.querySelector('.total-price__cart')
+    const totalProductsCart = document.querySelector('.total-products__cart')
+
     this.countOnceItem[currentId]++
     countItem.innerHTML = this.countOnceItem[currentId];
     priceItem.innerHTML = `${currentItem.price * this.countOnceItem[currentId]}$`
+    this.totalPrice = this.totalPrice + currentItem.price
+    this.totalProducts++;
+    totalPriceCart.innerHTML = `Total price: ${this.totalPrice}$`
+    totalProductsCart.innerHTML = `Products: ${this.totalProducts}`;
   }
 
   removeProductFromCart(event) {
     let currentId = event.target.dataset.id
-    let currentItem = productsList.products.find(elem => elem.id == currentId);
-    let indexItem = productsList.products.indexOf(currentItem)
+    let currentItem = this.arrayProducts.products.find(elem => elem.id == currentId);
+    let indexItem = this.arrayProducts.products.indexOf(currentItem)
     let localArr = JSON.parse( localStorage.productsLocal)
     localArr.products.splice(indexItem, 1);
-    
     localStorage.productsLocal = JSON.stringify(localArr);
-
-    if(localArr.products.length == 0) {
-      this.makeCart();
-    }
 
     const countItem = document.querySelector(`.count-item-${currentId}__cart`);
     const priceItem = document.querySelector(`.price-item-${currentId}__cart`);
+    const totalPriceCart = document.querySelector('.total-price__cart')
+    const totalProductsCart = document.querySelector('.total-products__cart')
+
     this.countOnceItem[currentId]--
+    if(this.countOnceItem[currentId] == 0) {
+      let item = document.querySelector(`.item-${currentId}__cart`)
+      item.remove();
+      console.log(localArr.products)
+    }
+    if(localArr.products.length == 0) {
+      const container = document.querySelector('.container__cart')
+      container.innerHTML = "ПУСТО"
+      return
+    }
     countItem.innerHTML = this.countOnceItem[currentId];
     priceItem.innerHTML = `${currentItem.price * this.countOnceItem[currentId]}$`
+    this.totalPrice = this.totalPrice - currentItem.price
+    totalPriceCart.innerHTML = `Total price: ${this.totalPrice}$`
+    this.totalProducts--;
+    totalProductsCart.innerHTML = `Products: ${this.totalProducts}`;
   }
 
+  buyNow(event) {
+    console.log(event)
+
+    const container = document.querySelector('.container__cart')
+
+    const buyNow = document.createElement('div');
+    const modal = document.createElement('div');
+    const form = document.createElement('form');
+    const personalDetails = document.createElement('div')
+    const cardDetails = document.createElement('div');
+    const confirm = document.createElement('button');
+    const title = document.createElement('h2');
+    const personName = document.createElement('div');
+    const phoneNumber = document.createElement('div');
+    const address = document.createElement('div');
+    const email = document.createElement('div');
+    const personNameInput = document.createElement('input');
+    const phoneNumberInput = document.createElement('input');
+    const addressInput = document.createElement('input');
+    const emailInput = document.createElement('input');
+    
+    buyNow.classList.add('buy-now__cart');
+    modal.classList.add('modal__cart');
+    form.classList.add('form__cart');
+    personalDetails.classList.add('personal-details__cart');
+    cardDetails.classList.add('card-details__cart');
+
+    title.classList.add('title-personal__cart');
+    personName.classList.add('person-name__cart');
+    phoneNumber.classList.add('phone-number__cart');
+    address.classList.add('address__cart');
+    email.classList.add('email__cart');
+
+    personName.classList.add('details-cart')
+    phoneNumber.classList.add('details-cart')
+    address.classList.add('details-cart')
+    email.classList.add('details-cart');
+
+    personNameInput.classList.add('person-name-input__cart');
+    phoneNumberInput.classList.add('phone-number-input__cart');
+    addressInput.classList.add('address-input__cart');
+    emailInput.classList.add('email-input__cart');
+
+    personNameInput.classList.add('input-cart')
+    phoneNumberInput.classList.add('input-cart')
+    addressInput.classList.add('input-cart')
+    emailInput.classList.add('input-cart')
+
+    personNameInput.placeholder = "Name"
+    phoneNumberInput.placeholder = "Phone"
+    addressInput.placeholder = "Delivery Address"
+    emailInput.placeholder = "E-Mail"
+
+    container.appendChild(buyNow);
+
+    buyNow.appendChild(modal);
+
+    modal.appendChild(form);
+
+    form.appendChild(personalDetails);
+    form.appendChild(cardDetails);
+    form.appendChild(confirm);
+
+    personalDetails.appendChild(title);
+    personalDetails.appendChild(personName);
+    personalDetails.appendChild(phoneNumber);
+    personalDetails.appendChild(address);
+    personalDetails.appendChild(email);
+
+    personName.appendChild(personNameInput)
+    phoneNumber.appendChild(phoneNumberInput)
+    address.appendChild(addressInput)
+    email.appendChild(emailInput)
+
+
+    confirm.innerHTML = 'confirm';
+    title.innerHTML = 'Personal Details'
+  }
+
+  checkPromo() {
+    let promo = document.querySelector('#input-promo')
+    let usedPromoArray = [];
+    let promoArray = ["rs", "epam"]
+
+    promo.addEventListener('input', function() {
+
+      if (usedPromoArray.includes(this.value)) {
+        return
+      }
+
+      if (promoArray.includes(this.value)) {
+        
+        usedPromoArray.push(this.value)
+
+
+
+        const succcesContainer = document.querySelector('.succes-promo-container__car')
+        const totalPrice = document.querySelector('.total-price__cart')
+
+        const succesPromo = document.createElement('div')
+        const promoList = document.createElement('div')
+        const removePromo = document.createElement('button')
+        const newPrice = document.createElement('div')
+
+        succesPromo.classList.add(`succces-promo__cart`)
+        succesPromo.classList.add(`${this.value}__cart`)
+        promoList.classList.add('promo-list__cart')
+        removePromo.classList.add('remove-promo__cart')
+        totalPrice.classList.add('line-through')
+        newPrice.classList.add('new-price__cart')
+        
+        succcesContainer.append(newPrice)
+        succcesContainer.appendChild(succesPromo)
+        succesPromo.appendChild(promoList)
+
+        succesPromo.appendChild(removePromo)
+
+        newPrice.innerHTML = `New price: ${this.totalPrice}`
+        removePromo.innerHTML = "remove";
+        promoList.innerHTML = this.value;
+
+        removePromo.addEventListener('click', function() {
+          succesPromo.remove();
+          usedPromoArray.splice(this.value, 1);
+          if(usedPromoArray.length == 0) {
+            totalPrice.classList.remove('line-through')
+          }
+        })
+
+        this.value  = '';
+      }
+    })
+  }
 }
 
 export const cartPageComponent = new CartPageComponent({
@@ -192,11 +356,15 @@ export const cartPageComponent = new CartPageComponent({
         <div class="order__cart">
           <div class="title-order__cart">Summary</div>
           <div class="total-products__cart">Products: N</div>
-          <div class="total-price__cart">Total price: N</div>
-          <div class="promo__cart">
-            <input class="input-promo__cart" type="search" placeholder="Enter promo code"/>
+          <div class="total-price__cart">Total price: N</div> 
+          <div class="test-promo__cart">Test promo: rs | epam</div>
+          <div class="succes-promo-container__car">
+
           </div>
-          <button class="buy-now__cart">Buy now</button>
+          <div class="promo__cart">
+            <input id="input-promo" class="input-promo__cart" type="search" minlength="6" maxlength="6" placeholder="Enter promo code"/>
+          </div>
+          <button class="buy-now-button__cart">Buy now</button>
         </div>
 
       </div>
