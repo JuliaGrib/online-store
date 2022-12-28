@@ -10,8 +10,16 @@ class HomePageComponent extends WFMComponent {
     actions() {
         return {
             'makeProducts': 'makeProducts',
+            'makeJsonProducts' : 'makeJsonProducts',
         }
     }
+
+    //пробуем выкатить json
+    makeJsonProducts(){
+
+    }
+
+    
 
     //вставляет товар из списка productsList на сайт
     makeProducts(){

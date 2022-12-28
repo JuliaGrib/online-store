@@ -18,5 +18,7 @@ import { appModule } from "./app/app.module";
 
 import "./framework/tools/storage";
 
+import "./app/lists/test"
+
 
 bootstrap(appModule)
