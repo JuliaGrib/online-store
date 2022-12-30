@@ -23,6 +23,8 @@
   display: flex;
 }
 
+
+
 .item-products__cart {
   display: flex;
   flex-direction: column;
@@ -30,14 +32,29 @@
   height: 100%;
 }
 
+.display-none {
+  display: none;
+}
+
+.pages__cart > span {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.pages__cart_active {
+  color: red;
+}
+
 .item__cart {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #e8f2e7;
   width: 100%;
   height: 120px;
 }
+
+
 
 .info-item__cart {
   width: 80%;
@@ -53,10 +70,27 @@
 }
 
 .detail-item__cart {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0 5px;
+}
+
+.name-item__cart {
+  padding-top: 1%;
+  color: black;
+  font-size: 120%;
+  text-align: center;
+}
+
+.description-item__cart {
+  padding-top: 1%;
+  color: rgb(85, 85, 85);
+  font-size: 90%;
+  text-align: center;
+  border-top: 1px solid red;
 }
 
 .additional-item__cart {
@@ -86,7 +120,7 @@
   align-items: center;
   background-color: #e8f2e7;
   width: 30%;
-  height: 200px;
+  min-height: 300px;
   margin: 10px;
 }
 
@@ -98,6 +132,41 @@
   display: flex;
   width: 100%;
   justify-content: space-around;
+}
+
+.promo-list__cart {
+  font-size: 80%;
+}
+
+.applied-promo-container__cart {
+  display: none;
+  width: 80%;
+  margin: 6% auto;
+  border: 1px solid orange;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.applied-promo__cart {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  color: black;
+  border-bottom: 1px solid orange;
+  padding: 2%;
+}
+
+.new-price__cart {
+  display: none;
+  justify-content: center;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.display-block {
+  display: block;
 }
 
 .buy-now__cart {
@@ -114,13 +183,20 @@
 }
 
 .modal__cart {
+  display: flex;
+  flex-direction: column ;
+  align-items: flex-end;
   padding: 1%;
-    border: 1px solid black;
-    border-radius: 0.5rem;
-    width: 40%;
-    background-color: #e8f2e7;
-    z-index: 99;
-    position: absolute;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  width: 70%;
+  background-color: #e8f2e7;
+  z-index: 99;
+  position: absolute;
+}
+
+.close-modal__cart {
+  width: max-content;
 }
 
 .form__cart {
@@ -142,10 +218,10 @@
 }
 
 .input-cart {
-  background-color: #181a1c;
+  background-color: #e8f2e7;
   width: 100%;
-  border: 1px solid orange;
-  color: orange;
+  border: 1px solid black;
+  color: black;
   border-radius: 2rem;
   padding: 0.4rem;
   outline: none;
@@ -153,3 +229,126 @@
   text-align: center;
   margin: 2% auto;
 }
+
+.card-details__cart {
+  margin-top: 1%;
+  width: 100%;
+}
+
+.title-card__cart {
+  margin-bottom: 2%;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 90%;
+}
+
+.data-card__cart {
+  border: 1px solid orange;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  background-color: white;
+  width: 55%;
+  height: 7rem;
+}
+
+.number-card__cart {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 7% auto 10%;
+}
+
+.img-card__cart {
+  width: 15%;
+  height: 90%;
+}
+
+.other-data__cart {
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.valid-data__cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50%;
+}
+
+.cvv-card__cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50%;
+}
+
+.number-card-input__cart {
+  width: 80%;
+  background: rgb(233,233,202);
+  border: 1px solid orange;
+  border-radius: 0.3rem;
+  outline: none;
+  text-align: center;
+  margin-left: 2%;
+  font-size: 90%;
+  color: #000;
+  font-weight: 700;
+}
+
+.valid-data-input__cart {
+  font-weight: 700;
+  font-size: 130%;
+  width: 60%;
+  height: 1rem;
+  background: rgb(233,233,202);
+  border: 1px solid orange;
+  border-radius: 0.3rem;
+  outline: none;
+  text-align: center;
+  margin-left: 2%;
+  font-size: 90%;
+  color: #000;
+  font-weight: 700;
+}
+
+.cvv-card-input__cart {
+  font-weight: 700;
+  font-size: 130%;
+  width: 60%;
+  height: 1rem;
+  background: rgb(233,233,202);
+  border: 1px solid orange;
+  border-radius: 0.3rem;
+  outline: none;
+  text-align: center;
+  margin-left: 2%;
+  font-size: 90%;
+  color: #000;
+  font-weight: 700;
+}
+
+.confirm-btn {
+  width: 40%;
+  font-size: 90%;
+  background-color: #3f1010;
+  border: 1px solid orange;
+  border-radius: 0.5rem;
+  padding: 1%;
+  cursor: pointer;
+  display: block;
+  margin: 5% auto;
+}
+
+.border-color-green {
+  border-color: green;
+}
+
+.border-color-red {
+  border-color: red;
+}
+
