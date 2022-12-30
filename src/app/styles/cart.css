@@ -4,6 +4,19 @@
   align-items: center;
 }
 
+.empty__cart {
+  padding-top: 100px;
+  background-color: #e8f2e7;
+  width: 100%;
+  height: calc(100vh - 50px);
+  text-align: center;
+}
+
+.main-link__cart {
+  text-decoration: none;
+  color: #afb0af;
+}
+
 .products__cart {
   display: flex;
   flex-direction: column;
@@ -189,7 +202,7 @@
   padding: 1%;
   border: 1px solid black;
   border-radius: 0.5rem;
-  width: 70%;
+  max-width: 500px;
   background-color: #e8f2e7;
   z-index: 99;
   position: absolute;
@@ -247,8 +260,8 @@
   margin: 0 auto;
   border-radius: 0.5rem;
   background-color: white;
-  width: 55%;
-  height: 7rem;
+  width: 320px;
+  height: 150px;
 }
 
 .number-card__cart {
@@ -260,7 +273,7 @@
 }
 
 .img-card__cart {
-  width: 15%;
+  width: 10%;
   height: 90%;
 }
 
