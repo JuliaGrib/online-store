@@ -343,7 +343,6 @@ class CartPageComponent extends WFMComponent {
 
     let div_none = document.querySelectorAll(".display-none");
     let j =0;
-    console.log("currentPage " + currentPage)
     for (let i = currentPage * 3; i < div_none.length; i++) {
   
       if (j  < countOnPage) {
@@ -357,10 +356,6 @@ class CartPageComponent extends WFMComponent {
     main_page = document.getElementById(`page${currentPage+1}`);
     console.log(main_page)
     main_page.classList.add("pages__cart_active");
-
-    // let url = new URL(window.location)
-    // url.searchParams.set('page', id.slice(-1))
-    // history.pushState(null, null, url);
 
     paginator.addEventListener('click', (event) => {
       let e = event || window.event;

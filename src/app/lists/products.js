@@ -140,7 +140,6 @@ export let productsList = {
             ],
             "stock" : 8
         },
-        ,
         {
             "id" : 11,
             "title" : "Chair Abby Blue Sky",
