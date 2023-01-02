@@ -15,26 +15,35 @@ class HomePageComponent extends WFMComponent {
 
     //вставляет товар из списка productsList на сайт
     makeProducts(){
-        let productsContainer = document.querySelector('.products');
+        let productsContainer = document.querySelector('.products__main');
         
         productsList.products.forEach((elem, index) => {
             
             let productElem = document.createElement('div');
             let productImg = document.createElement('img');
-            let addItemBtn = document.createElement('button');
-            let removeItemBtn = document.createElement('button');
-            addItemBtn.setAttribute('data-id', `${elem.id}`);
-            removeItemBtn.setAttribute('data-id', `${elem.id}`);
+            let titleItem = document.createElement('p');
+            let priceContainer = document.createElement('div');
+            let priceItem = document.createElement('p');
+            let addItemBtn = document.createElement('a');
+
+            productElem.classList.add('elem__item');
+            priceContainer.classList.add('price__container');
+            titleItem.classList.add('title__item');
+            priceItem.classList.add('price__item')
             addItemBtn.classList.add('add__item');
-            removeItemBtn.classList.add('remove__item');
-            productElem.innerHTML = elem.title;
+
             productImg.src = elem.thumbnail;
-            addItemBtn.innerHTML = 'Add';
-            removeItemBtn.innerHTML = 'Del';
+            titleItem.innerHTML = elem.title;
+            priceItem.innerHTML = `$${elem.price}`;
+            addItemBtn.setAttribute('data-id', `${elem.id}`);
+            addItemBtn.innerHTML = 'Add to cart';
+
             productsContainer.appendChild(productElem);
             productElem.appendChild(productImg);
-            productElem.appendChild(addItemBtn);
-            productElem.appendChild(removeItemBtn);
+            productElem.appendChild(titleItem);
+            productElem.appendChild(priceContainer);
+            priceContainer.appendChild(priceItem);
+            priceContainer.appendChild(addItemBtn);
 
             
         })
@@ -77,9 +86,47 @@ class HomePageComponent extends WFMComponent {
 
 export const homePageComponent = new HomePageComponent({
     selector: 'app-home-page',
-    template: `<h1>Home Page</h1>
-    <button class="pluse">+</button>
-    <div class="products"></div>
+    template: `
+    <div class="banner__main"></div>
+    <div class="container__main">
+        <div class="sidebar__main">
+            <div class="filter__main">
+                <p class="filter__title">Categories</p>
+                <ul>
+                    <li><input type="checkbox" name="sofa" value="sofa">Sofa</li>
+                    <li><input type="checkbox" name="armchair" value="armchair">Armchair</li>
+                    <li><input type="checkbox" name="table" value="table">Table</li>
+                    <li><input type="checkbox" name="chair" value="chair">Сhair</li>
+                </ul>
+            </div>
+            <div class="filter__main">
+                <p class="filter__title">Brand</p>
+                <ul>
+                    <li><input type="checkbox" name="viena" value="viena">Viena</li>
+                    <li><input type="checkbox" name="numo" value="numo">Numo</li>
+                    <li><input type="checkbox" name="dins" value="dins">Dins</li>
+                    <li><input type="checkbox" name="abby" value="abby">Abby</li>
+                </ul>
+            </div>
+        </div>
+        <div class="main__content">
+            <div class="main__info">
+                <div class="main__select">
+                    <select>
+                        <option>Descending</option>
+                        <option>Ascending</option>
+                    </select>
+                </div>
+                <div class="main__search">
+                    <input type="search" placeholder="Search"></input>
+                </div>
+                <div class="main__width">
+                    View
+                </div>
+            </div>
+            <div class="products__main"></div>
+        </div>
+    </div>
     `
 })
 

@@ -30,10 +30,10 @@ export let productsList = {
         },
         {
             "id" : 3,
-            "title" : "Sofa Svaut Velvet Ocean",
+            "title" : "Sofa Numo Velvet Ocean",
             "description" : "Eurobook sofa, with linen box, Scandinavian style",
             "price" : 2565,
-            "brand" : "Svaut",
+            "brand" : "Dins",
             "category" : "Sofa",
             "thumbnail" : "../assets/products/sofa/Svaut/mini.jpg",
             "images" : [
@@ -58,10 +58,10 @@ export let productsList = {
         },
         {
             "id" : 5,
-            "title" : "Sofa Disent Velvet Terra",
+            "title" : "Sofa Dins Velvet Terra",
             "description" : "Pantograph with legs, with linen drawers and pillows included, Scandinavian style",
             "price" : 2464,
-            "brand" : "Disent",
+            "brand" : "Dins",
             "category" : "Sofa",
             "thumbnail" : "../assets/products/sofa/Disent/mini.jpg",
             "images" : [
@@ -72,10 +72,10 @@ export let productsList = {
         },
         {
             "id" : 6,
-            "title" : "Sofa Bons-T Happy Mint",
+            "title" : "Sofa Abby Happy Mint",
             "description" : "Click-clack two-section, modern style",
             "price" : 1406,
-            "brand" : "Bons-T",
+            "brand" : "Abby",
             "category" : "Sofa",
             "thumbnail" : "../assets/products/sofa/Bons/mini.jpg",
             "images" : [
@@ -100,12 +100,55 @@ export let productsList = {
         },
         {
             "id" : 8,
-            "title" : "Sofa Siteno Barhat Mint",
+            "title" : "Sofa Abby Barhat Mint",
             "description" : "Pantograph, with linen box and pillows included, Scandinavian style",
             "price" : 1821,
-            "brand" : "Siteno",
+            "brand" : "Abby",
             "category" : "Sofa",
             "thumbnail" : "../assets/products/sofa/Siteno/mini.jpg",
+            "images" : [
+            "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
+            "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
+            ],
+            "stock" : 8
+        },
+        {
+            "id" : 9,
+            "title" : "Armchair Abby Velvet Yellow",
+            "description" : "Pantograph, with linen box and pillows included, Scandinavian style",
+            "price" : 642,
+            "brand" : "Abby",
+            "category" : "Armchair",
+            "thumbnail" : "../assets/products/armchair/1/main.jpg",
+            "images" : [
+            "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
+            "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
+            ],
+            "stock" : 8
+        },
+        {
+            "id" : 10,
+            "title" : "Table Abby Gold",
+            "description" : "Pantograph, with linen box and pillows included, Scandinavian style",
+            "price" : 416,
+            "brand" : "Abby",
+            "category" : "Table",
+            "thumbnail" : "../assets/products/table/1/mini.jpg",
+            "images" : [
+            "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
+            "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
+            ],
+            "stock" : 8
+        },
+        ,
+        {
+            "id" : 11,
+            "title" : "Chair Abby Blue Sky",
+            "description" : "Pantograph, with linen box and pillows included, Scandinavian style",
+            "price" : 366,
+            "brand" : "Abby",
+            "category" : "Chair",
+            "thumbnail" : "../assets/products/chair/1/mini.jpg",
             "images" : [
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"

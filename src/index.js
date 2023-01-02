@@ -10,6 +10,9 @@ import "./app/styles/header.css"
 //импортируем стиль корзины
 import "./app/styles/cart.css"
 
+//импортируем стиль главной
+import "./app/styles/main-page.css"
+
 //импорт функции запуска модуля
 import { bootstrap } from "./framework";
 
