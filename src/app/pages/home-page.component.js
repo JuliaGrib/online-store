@@ -35,35 +35,52 @@ class HomePageComponent extends WFMComponent {
           } 
 
           if(sort) {
-            if(sort == 'price-ASC') {
-              console.log("price-ASC")
+            if(sort === 'price-ASC') {
+              this.visibleProducts.sort((x, y) => x.price - y.price)
+              console.log(this.visibleProducts)
+            } else if (sort === 'price-DESC') {
+              this.visibleProducts.sort((x, y) => y.price - x.price)
+              console.log(this.visibleProducts)
+            }else if (sort === 'stock-ASC') {
+              this.visibleProducts.sort((x, y) => x.stock - y.stock)
+              console.log(this.visibleProducts)
+            } else if (sort === 'stock-DESC') {
+              this.visibleProducts.sort((x, y) => y.stock - x.stock)
+              console.log(this.visibleProducts)
             }
           }
 
-          let input = document.querySelector('.input-main__search')
-          input.value = search
+          if(search) {
+            console.log("есть квери search")
 
-          let tempArray = [];
-          for(let i = 0; i < productsList.products.length; i++) {
-            
-            let price = productsList.products[i].price;
-            price = String(price);
-            let stock = productsList.products[i].stock;
-            stock = String(stock);
-            let title = productsList.products[i].title.toLowerCase();
-            let brand = productsList.products[i].brand.toLowerCase();
-            let category = productsList.products[i].category.toLowerCase();
-    
-            let isIncludePrice = price.includes(search);
-            let isIncludeStock = stock.includes(search);
-            let isIncludeTitle = title.includes(search);
-            let isIncludeBrand = brand.includes(search);
-            let isIncludeCategory = category.includes(search);
-            if(isIncludePrice || isIncludeStock || isIncludeTitle || isIncludeBrand || isIncludeCategory) {
-              tempArray.push(productsList.products[i])
+            this.visibleProducts = productsList.products;
+
+            let input = document.querySelector('.input-main__search')
+            input.value = search
+
+            let tempArray = [];
+            for(let i = 0; i <  this.visibleProducts.length; i++) {
+              
+              let price =  this.visibleProducts[i].price;
+              price = String(price);
+              let stock =  this.visibleProducts[i].stock;
+              stock = String(stock);
+              let title =  this.visibleProducts[i].title.toLowerCase();
+              let brand =  this.visibleProducts[i].brand.toLowerCase();
+              let category =  this.visibleProducts[i].category.toLowerCase();
+      
+              let isIncludePrice = price.includes(search);
+              let isIncludeStock = stock.includes(search);
+              let isIncludeTitle = title.includes(search);
+              let isIncludeBrand = brand.includes(search);
+              let isIncludeCategory = category.includes(search);
+              if(isIncludePrice || isIncludeStock || isIncludeTitle || isIncludeBrand || isIncludeCategory) {
+                tempArray.push( this.visibleProducts[i])
+              }
             }
+            this.visibleProducts = tempArray;
+            console.log(this.visibleProducts)
           }
-          this.visibleProducts = tempArray;
         } 
 
         this.visibleProducts.forEach((elem, index) => {
@@ -74,24 +91,29 @@ class HomePageComponent extends WFMComponent {
             let priceContainer = document.createElement('div');
             let priceItem = document.createElement('p');
             let addItemBtn = document.createElement('a');
+            let stockItem = document.createElement('div')
 
             productElem.classList.add('elem__item');
             priceContainer.classList.add('price__container');
             titleItem.classList.add('title__item');
-            priceItem.classList.add('price__item')
+            priceItem.classList.add('price__item');
+            stockItem.classList.add('stock__item')
             addItemBtn.classList.add('add__item');
+
 
             productImg.src = elem.thumbnail;
             titleItem.innerHTML = elem.title;
             priceItem.innerHTML = `$${elem.price}`;
             addItemBtn.setAttribute('data-id', `${elem.id}`);
             addItemBtn.innerHTML = 'Add to cart';
+            stockItem.innerHTML = `Stock: ${elem.stock}`;
 
             productsContainer.appendChild(productElem);
             productElem.appendChild(productImg);
             productElem.appendChild(titleItem);
             productElem.appendChild(priceContainer);
             priceContainer.appendChild(priceItem);
+            priceContainer.appendChild(stockItem)
             priceContainer.appendChild(addItemBtn);
 
         })
