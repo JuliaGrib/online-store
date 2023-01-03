@@ -13,6 +13,9 @@ import "./app/styles/cart.css"
 //импортируем стиль главной
 import "./app/styles/main-page.css"
 
+//импортируем стиль страницы с товаром
+import "./app/styles/about.css"
+
 //импорт функции запуска модуля
 import { bootstrap } from "./framework";
 
