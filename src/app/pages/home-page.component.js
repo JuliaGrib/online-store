@@ -49,7 +49,7 @@ class HomePageComponent extends WFMComponent {
           if(search == '') this.clearQuery("search")
           if(category == '') this.clearQuery("category")
           if(brand == '') this.clearQuery("brand")
-          
+
           this.filterReload(category)
           this.filterReload(brand)
 
@@ -211,6 +211,12 @@ class HomePageComponent extends WFMComponent {
             }
           }
         }
+        const checkboxes = document.querySelectorAll('input[type=checkbox]')
+        checkboxes.forEach((elem) => {
+          if(keyArray.includes(elem.value)) {
+            elem.checked = true
+          }
+        })
         this.visibleProducts = tempArray;
       }
     }
@@ -241,6 +247,9 @@ class HomePageComponent extends WFMComponent {
       let url = new URL(window.location)
       url.searchParams.delete(key)
       history.pushState(null, null, url);
+      if(!url.search) {
+        this.visibleProducts = productsList.products;
+      }
     }
 
     firstSlider() {
