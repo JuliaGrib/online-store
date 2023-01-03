@@ -14,14 +14,24 @@ class HomePageComponent extends WFMComponent {
             'makeProducts': 'makeProducts',
         }
     }
-
+    //события
+    events() {
+      return {
+          'click .add__item': 'addProductToLocal',
+          'click .remove__item': 'removeProductToLocal',
+          'input .input-main__search': 'searchProduct',
+          'change .main__select-sort': 'sortProducts',
+          'input #slider-1': 'firstSlider',
+          'input #slider-2': 'secondSlider',
+          'input #stock-slider-1': 'firstStockSlider',
+          'input #stock-slider-2': 'secondStockSlider',
+          'change .filter__main': 'filterProducts'
+      }
+  }
     //вставляет товар из списка productsList на сайт
     makeProducts(){
-      const slider1 = document.querySelector('#slider-1')
-      const slider2 = document.querySelector('#slider-2')
 
         let productsContainer = document.querySelector('.products__main');
-
         productsContainer.innerHTML = '';
 
         let url = new URL(window.location)
@@ -34,28 +44,14 @@ class HomePageComponent extends WFMComponent {
           let price = params.get("price");
           let stock = params.get("stock");
           let category = params.get("category");
+          let brand = params.get("brand")
 
-          if(search == '') {
-            this.clearQuery("search")
-          } 
-          if(category == '') {
-            this.clearQuery("category")
-          } 
-
-          if(category) {
-            this.visibleProducts = productsList.products;
-            let keyArray = category.split('↕');
-            let tempArray = []
-            for(let i = 0; i < this.visibleProducts.length; i++) {
-              for(let j = 0; j < keyArray.length; j++) {
-                if(this.visibleProducts[i].category.toLowerCase() == keyArray[j]) {
-                  tempArray.push(this.visibleProducts[i])
-                }
-              }
-            }
-            this.visibleProducts = tempArray;
-            console.log(this.visibleProducts)
-          }
+          if(search == '') this.clearQuery("search")
+          if(category == '') this.clearQuery("category")
+          if(brand == '') this.clearQuery("brand")
+          
+          this.filterReload(category)
+          this.filterReload(brand)
 
           if(stock) {
             this.visibleProducts = productsList.products;
@@ -172,48 +168,51 @@ class HomePageComponent extends WFMComponent {
         })
     }
 
-    //события
-    events() {
-        return {
-            'click .add__item': 'addProductToLocal',
-            'click .remove__item': 'removeProductToLocal',
-            'input .input-main__search': 'searchProduct',
-            'change .main__select-sort': 'sortProducts',
-            'input #slider-1': 'firstSlider',
-            'input #slider-2': 'secondSlider',
-            'input #stock-slider-1': 'firstStockSlider',
-            'input #stock-slider-2': 'secondStockSlider',
-            'change .checkbox-category__main': 'checkboxCategory'
-        }
-    }
-
-    checkboxCategory(event) {
+    filterProducts(event) {
       let target = event.target;
       if (target.tagName === 'INPUT' && target.type === 'checkbox') {
-        let params = new URLSearchParams(document.location.search);
-        if(params.get("category")) {
-          if(!target.checked) {
-            let key = params.get('category')
-            let t = key.split('↕');
-            let i = t.indexOf(target.value);
-            t.splice(i, 1)
-            key = t.join('↕')
-            this.makeQuery('category', key);
-            this.makeProducts();
-          } else {
-            let key = params.get('category')
-            key = key + '↕' + target.value
-            this.makeQuery('category', key);
-            this.makeProducts();
-          }
-        } else {
-          let key = target.value
-          this.makeQuery('category', key);
-          this.makeProducts();
-        }
-
+        if(target.classList  == 'category') 
+          this.filterBy('category', event)
+        if(target.classList  == 'brand') 
+          this.filterBy('brand', event)
       }
-      
+    }
+
+    filterBy(selector, event) {
+      let target = event.target;
+      let params = new URLSearchParams(document.location.search);
+      let key = params.get(selector)
+      if(params.get(selector)) {
+        if(!target.checked) {
+          let t = key.split('↕');
+          let i = t.indexOf(target.value);
+          t.splice(i, 1)
+          key = t.join('↕')
+        } else{
+          key = key + '↕' + target.value
+        }
+      } else{
+        key = target.value
+      }
+      this.makeQuery(selector, key);
+      this.makeProducts();
+    }
+
+    filterReload(selector) {
+      if(selector) {
+        this.visibleProducts = productsList.products;
+        let keyArray = selector.split('↕');
+        let tempArray = []
+        for(let i = 0; i < this.visibleProducts.length; i++) {
+          for(let j = 0; j < keyArray.length; j++) {
+            if(this.visibleProducts[i].category.toLowerCase() == keyArray[j] ||
+               this.visibleProducts[i].brand.toLowerCase() == keyArray[j]) {
+              tempArray.push(this.visibleProducts[i])
+            }
+          }
+        }
+        this.visibleProducts = tempArray;
+      }
     }
 
     minPriceProducts() {
@@ -358,19 +357,19 @@ export const homePageComponent = new HomePageComponent({
             <div class="filter__main">
                 <p class="filter__title">Categories</p>
                 <ul class="checkbox-category__main">
-                    <li><input type="checkbox" name="sofa" value="sofa">Sofa</li>
-                    <li><input type="checkbox" name="armchair" value="armchair">Armchair</li>
-                    <li><input type="checkbox" name="table" value="table">Table</li>
-                    <li><input type="checkbox" name="chair" value="chair">Сhair</li>
+                    <li><input class="category"  type="checkbox" name="sofa" value="sofa">Sofa</li>
+                    <li><input class="category" type="checkbox" name="armchair" value="armchair">Armchair</li>
+                    <li><input class="category" type="checkbox" name="table" value="table">Table</li>
+                    <li><input class="category" type="checkbox" name="chair" value="chair">Сhair</li>
                 </ul>
             </div>
             <div class="filter__main">
                 <p class="filter__title">Brand</p>
                 <ul>
-                    <li><input type="checkbox" name="viena" value="viena">Viena</li>
-                    <li><input type="checkbox" name="numo" value="numo">Numo</li>
-                    <li><input type="checkbox" name="dins" value="dins">Dins</li>
-                    <li><input type="checkbox" name="abby" value="abby">Abby</li>
+                    <li><input class="brand" type="checkbox" name="viena" value="viena">Viena</li>
+                    <li><input class="brand" type="checkbox" name="numo" value="numo">Numo</li>
+                    <li><input class="brand" type="checkbox" name="dins" value="dins">Dins</li>
+                    <li><input class="brand" type="checkbox" name="abby" value="abby">Abby</li>
                 </ul>
             </div>
             <div class="multi-range__main">
