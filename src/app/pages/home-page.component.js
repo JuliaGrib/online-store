@@ -120,7 +120,7 @@ class HomePageComponent extends WFMComponent {
             
             let productElem = document.createElement('div');
             let productImg = document.createElement('img');
-            let titleItem = document.createElement('p');
+            let titleItem = document.createElement('a');
             let priceContainer = document.createElement('div');
             let priceItem = document.createElement('p');
             let addItemBtn = document.createElement('a');
@@ -154,6 +154,7 @@ class HomePageComponent extends WFMComponent {
             range2.innerHTML = this.maxPriceProducts();
 
             productImg.src = elem.thumbnail;
+            titleItem.href = `#about-product/${elem.id}`;
             titleItem.innerHTML = elem.title;
             priceItem.innerHTML = `$${elem.price}`;
             addItemBtn.setAttribute('data-id', `${elem.id}`);
