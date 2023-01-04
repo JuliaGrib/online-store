@@ -21,10 +21,7 @@ class HomePageComponent extends WFMComponent {
           'click .remove__item': 'removeProductToLocal',
           'input .input-main__search': 'searchProduct',
           'change .main__select-sort': 'sortProducts',
-          'input #slider-1': 'firstSlider',
-          'input #slider-2': 'secondSlider',
-          'input #stock-slider-1': 'firstStockSlider',
-          'input #stock-slider-2': 'secondStockSlider',
+          'input .slider': 'multiSlider',
           'change .filter__main': 'filterProducts',
           'click .main__width': 'viewProducts',
           'click .reset-filters': 'resetFilters',
@@ -38,94 +35,10 @@ class HomePageComponent extends WFMComponent {
         productsContainer.innerHTML = '';
 
         let url = new URL(window.location)
+        if(url.search) 
+          this.updatePage();
 
-        if(url.search) {
-
-          let params = new URLSearchParams(document.location.search);
-          let search = params.get("search");
-          let sort = params.get("sort");
-          let price = params.get("price");
-          let stock = params.get("stock");
-          let category = params.get("category");
-          let brand = params.get("brand")
-          let view = params.get("view")
-
-          if(search == '') this.clearQuery("search")
-          if(category == '') this.clearQuery("category")
-          if(brand == '') this.clearQuery("brand")
-          if(view == '') this.clearQuery("view")
-
-          this.viewReload(view)
-          this.filterReload(category)
-          this.filterReload(brand)
-
-          if(stock) {
-            this.visibleProducts = productsList.products;
-            let min = +stock.split('↕')[0]
-            let max = +stock.split('↕')[1]
-            let tempArray = this.visibleProducts.filter( elem => elem.stock >= min && elem.stock <= max)
-            this.visibleProducts = tempArray;
-          }
-
-          if(price) {
-            this.visibleProducts = productsList.products;
-            let min = +price.split('↕')[0]
-            let max = +price.split('↕')[1]
-            let tempArray = this.visibleProducts.filter( elem => elem.price >= min && elem.price <= max)
-            this.visibleProducts = tempArray;
-          }
-
-          if(sort) {
-            const options = document.querySelectorAll("option")
-            options.forEach((elem) => {
-              if(elem.dataset.id == sort) {
-                elem.selected = true;
-              }
-            })
-
-            if(sort === 'price-ASC') {
-              this.visibleProducts.sort((x, y) => x.price - y.price)
-            } else if (sort === 'price-DESC') {
-              this.visibleProducts.sort((x, y) => y.price - x.price)
-            }else if (sort === 'stock-ASC') {
-              this.visibleProducts.sort((x, y) => x.stock - y.stock)
-            } else if (sort === 'stock-DESC') {
-              this.visibleProducts.sort((x, y) => y.stock - x.stock)
-            }
-          }
-
-          if(search) {
-
-            this.visibleProducts = productsList.products;
-
-            let input = document.querySelector('.input-main__search')
-            input.value = search
-
-            let tempArray = [];
-            for(let i = 0; i <  this.visibleProducts.length; i++) {
-              
-              let price =  this.visibleProducts[i].price;
-              price = String(price);
-              let stock =  this.visibleProducts[i].stock;
-              stock = String(stock);
-              let title =  this.visibleProducts[i].title.toLowerCase();
-              let brand =  this.visibleProducts[i].brand.toLowerCase();
-              let category =  this.visibleProducts[i].category.toLowerCase();
-      
-              let isIncludePrice = price.includes(search);
-              let isIncludeStock = stock.includes(search);
-              let isIncludeTitle = title.includes(search);
-              let isIncludeBrand = brand.includes(search);
-              let isIncludeCategory = category.includes(search);
-              if(isIncludePrice || isIncludeStock || isIncludeTitle || isIncludeBrand || isIncludeCategory) {
-                tempArray.push( this.visibleProducts[i])
-              }
-            }
-            this.visibleProducts = tempArray;
-          }
-        } 
-
-        this.visibleProducts.forEach((elem, index) => {
+        this.visibleProducts.forEach((elem) => {
             
             let productElem = document.createElement('div');
             let productImg = document.createElement('img');
@@ -144,23 +57,44 @@ class HomePageComponent extends WFMComponent {
 
             let range1 = document.querySelector('#range-1');
             let range2 = document.querySelector('#range-2');
+            let stockRange1 = document.querySelector('#stock-range-1');
+            let stockRange2 = document.querySelector('#stock-range-2');
             let slider1 = document.querySelector('#slider-1');
             let slider2 = document.querySelector('#slider-2');
             let stockSlider1 = document.querySelector('#stock-slider-1');
             let stockSlider2 = document.querySelector('#stock-slider-2');
 
-            slider1.min = "366";
-            slider1.max = "2565";
-            slider2.min = "366";
-            slider2.max = "2565";
+            slider1.min = this.minPrice();
+            slider1.max = this.maxPrice();
+            slider2.min = this.minPrice();
+            slider2.max = this.maxPrice();
+            stockSlider1.min = this.minStock();
+            stockSlider1.max = this.maxStock();
+            stockSlider2.min = this.minStock();
+            stockSlider2.max = this.maxStock();
 
-            stockSlider1.min = "5";
-            stockSlider1.max = "30";
-            stockSlider2.min = "5";
-            stockSlider2.max = "30";
+            let params = new URLSearchParams(document.location.search);
+            if(!params.get('price') && !params.get('stock')) {
+              slider1.value = this.minPrice();
+              slider2.value = this.maxPrice();
+              stockSlider1.value = this.minStock();
+              stockSlider2.value = this.maxStock();
+            }
 
-            range1.innerHTML = this.minPriceProducts();
-            range2.innerHTML = this.maxPriceProducts();
+            if(params.get('price') && !params.get('stock')) {
+              stockSlider1.value = this.minStock();
+              stockSlider2.value = this.maxStock();
+            }
+
+            if(!params.get('price') && params.get('stock')) {
+              slider1.value = this.minPrice();
+              slider2.value = this.maxPrice();
+            }
+
+            range1.innerHTML = slider1.value
+            range2.innerHTML = slider2.value
+            stockRange1.innerHTML = stockSlider1.value
+            stockRange2.innerHTML = stockSlider2.value
 
             productImg.src = elem.thumbnail;
             titleItem.href = `#about-product/${elem.id}`;
@@ -179,52 +113,131 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(addItemBtn);
 
         })
+        const total = document.querySelector('.main__total')
+        total.innerHTML = `Found: ${this.visibleProducts.length}` 
     }
 
-    copyLink() {
-      const copyField = document.querySelector('.copy-field')
-      const copyLink = document.querySelector('.copy-link')
-      copyLink.innerHTML = "Copied!"
-      copyLink.style.color = "orange"
-      setTimeout(() => {
-        copyLink.innerHTML = "Copy link"
-        copyLink.style.color = "black"
-      },500)
-      copyField.value =  window.location.href;
-      copyField.setAttribute('readonly', '');
-      copyField.select();
-      copyField.setSelectionRange(0, 99999);
-      document.execCommand('copy');
-    }
-
-    resetFilters() {
-      const options = document.querySelectorAll("option")
-      const checkboxes = document.querySelectorAll('input[type=checkbox]')
-      const input = document.querySelector('.input-main__search')
-      const slider1 = document.querySelector('#slider-1');
-      const slider2 = document.querySelector('#slider-2');
-      const stockSlider1 = document.querySelector('#stock-slider-1');
-      const stockSlider2 = document.querySelector('#stock-slider-2');
-
-      let url = new URL(window.location)
-      url.searchParams.delete('category')
-      url.searchParams.delete('brand')
-      url.searchParams.delete('price')
-      url.searchParams.delete('stock')
-      url.searchParams.delete('search')
-      url.searchParams.delete('sort')
-      history.pushState(null, null, url);
+    updatePage() {
       this.visibleProducts = productsList.products;
 
-      options[0].selected = true
-      checkboxes.forEach(elem => elem.checked = false)
-      input.value = ''
-      slider1.value = "366"
-      slider2.value = "2565"
-      stockSlider1.value = "5"
-      stockSlider2.value = "30"
+      let params = new URLSearchParams(document.location.search);
+
+      let search = params.get("search");
+      let sort = params.get("sort");
+      let price = params.get("price");
+      let stock = params.get("stock");
+      let category = params.get("category");
+      let brand = params.get("brand")
+      let view = params.get("view")
+
+      if(search == '') this.clearQuery("search")
+      if(category == '') this.clearQuery("category")
+      if(brand == '') this.clearQuery("brand")
+      if(view == '') this.clearQuery("view")
+
+      if(category) this.filterReload(category)
+      if(brand) this.filterReload(brand)
+      if(view) this.viewReload(view)
+      if(stock) this.updateStockRange(stock)
+      if(price) this.updatePriceRange(price)
+      if(search) this.updateSearch(search)
+      if(sort) this.updateSort(sort);
+
+    }
+
+    updateSort(sort) {
+      const options = document.querySelectorAll("option")
+        options.forEach((elem) => {
+          if(elem.dataset.id == sort) {
+            elem.selected = true;
+          }
+        })
+        if(sort === 'price-ASC') {
+          this.visibleProducts.sort((x, y) => x.price - y.price)
+        } else if (sort === 'price-DESC') {
+          this.visibleProducts.sort((x, y) => y.price - x.price)
+        }else if (sort === 'stock-ASC') {
+          this.visibleProducts.sort((x, y) => x.stock - y.stock)
+        } else if (sort === 'stock-DESC') {
+          this.visibleProducts.sort((x, y) => y.stock - x.stock)
+        }
+    }
+
+    updateSearch(search) {
       
-      this.makeProducts();  
+      let input = document.querySelector('.input-main__search')
+      input.value = search
+
+      let tempArray = [];
+      for(let i = 0; i <  this.visibleProducts.length; i++) {
+        
+        let price =  this.visibleProducts[i].price;
+        price = String(price);
+        let stock =  this.visibleProducts[i].stock;
+        stock = String(stock);
+        let title =  this.visibleProducts[i].title.toLowerCase();
+        let brand =  this.visibleProducts[i].brand.toLowerCase();
+        let category =  this.visibleProducts[i].category.toLowerCase();
+
+        let isIncludePrice = price.includes(search);
+        let isIncludeStock = stock.includes(search);
+        let isIncludeTitle = title.includes(search);
+        let isIncludeBrand = brand.includes(search);
+        let isIncludeCategory = category.includes(search);
+        if(isIncludePrice || isIncludeStock || isIncludeTitle || isIncludeBrand || isIncludeCategory) {
+          tempArray.push( this.visibleProducts[i])
+        }
+      }
+      this.visibleProducts = tempArray;
+    }
+
+    updateStockRange(range) {
+      const stockSlider1 = document.querySelector('#stock-slider-1');
+      const stockSlider2 = document.querySelector('#stock-slider-2');
+      const stockRange1 = document.querySelector('#stock-range-1');
+      const stockRange2 = document.querySelector('#stock-range-2');
+
+      let min = +range.split('↕')[0]
+      let max = +range.split('↕')[1]
+      stockSlider1.min = this.minStock();
+      stockSlider1.max = this.maxStock();
+      stockSlider2.min = this.minStock();
+      stockSlider2.max = this.maxStock();
+
+      stockSlider1.value = min;
+      stockSlider2.value = max;
+      stockRange1.value = min;
+      stockRange2.value = max;
+
+      let tempArray = this.visibleProducts.filter(
+        elem => elem.stock >= min && elem.stock <= max ||
+        elem.price >= min && elem.price <= max)
+      this.visibleProducts = tempArray;
+    }
+
+    updatePriceRange(range) {
+      const slider1 = document.querySelector('#slider-1');
+      const slider2 = document.querySelector('#slider-2');
+      const range1 = document.querySelector('#range-1');
+      const range2 = document.querySelector('#range-2');
+
+      let min = +range.split('↕')[0]
+      let max = +range.split('↕')[1]
+
+      slider1.min = this.minPrice();
+      slider1.max = this.maxPrice();
+      slider2.min = this.minPrice();
+      slider2.max = this.maxPrice();
+
+      slider1.value = min;
+      slider2.value = max;
+      range1.value = min;
+      range2.value = max;
+
+      let tempArray = this.visibleProducts.filter(
+        elem => elem.stock >= min && elem.stock <= max ||
+        elem.price >= min && elem.price <= max)
+      this.visibleProducts = tempArray;
     }
 
     viewReload(view) {
@@ -276,8 +289,6 @@ class HomePageComponent extends WFMComponent {
     }
 
     filterReload(selector) {
-      if(selector) {
-        this.visibleProducts = productsList.products;
         let keyArray = selector.split('↕');
         let tempArray = []
         for(let i = 0; i < this.visibleProducts.length; i++) {
@@ -295,21 +306,79 @@ class HomePageComponent extends WFMComponent {
           }
         })
         this.visibleProducts = tempArray;
-      }
     }
 
-    minPriceProducts() {
+    copyLink() {
+      const copyField = document.querySelector('.copy-field')
+      const copyLink = document.querySelector('.copy-link')
+      copyLink.innerHTML = "Copied!"
+      copyLink.style.color = "orange"
+      setTimeout(() => {
+        copyLink.innerHTML = "Copy link"
+        copyLink.style.color = "black"
+      },500)
+      copyField.value =  window.location.href;
+      copyField.setAttribute('readonly', '');
+      copyField.select();
+      copyField.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+    }
+
+    resetFilters() {
+      const checkboxes = document.querySelectorAll('input[type=checkbox]')
+      const input = document.querySelector('.input-main__search')
+      const slider1 = document.querySelector('#slider-1');
+      const slider2 = document.querySelector('#slider-2');
+      const stockSlider1 = document.querySelector('#stock-slider-1');
+      const stockSlider2 = document.querySelector('#stock-slider-2');
+
+      let url = new URL(window.location)
+      url.searchParams.delete('category')
+      url.searchParams.delete('brand')
+      url.searchParams.delete('price')
+      url.searchParams.delete('stock')
+      url.searchParams.delete('search')
+      url.searchParams.delete('sort')
+      history.pushState(null, null, url);
+
+      checkboxes.forEach(elem => elem.checked = false)
+      input.value = ''
+      slider1.value = "366"
+      slider2.value = "2565"
+      stockSlider1.value = "5"
+      stockSlider2.value = "30"
+      this.visibleProducts = productsList.products;
+      this.makeProducts();  
+    }
+
+    minPrice() {
       let priceArray = []
-      for(let i = 0; i < this.visibleProducts.length; i++ ) {
-        priceArray.push(this.visibleProducts[i].price)
+      for(let i = 0; i < productsList.products.length; i++ ) {
+        priceArray.push(productsList.products[i].price)
       }
       return Math.min.apply(null, priceArray)
     }
 
-    maxPriceProducts() {
+    maxPrice() {
       let priceArray = []
-      for(let i = 0; i < this.visibleProducts.length; i++ ) {
-        priceArray.push(this.visibleProducts[i].price)
+      for(let i = 0; i < productsList.products.length; i++ ) {
+        priceArray.push(productsList.products[i].price)
+      }
+      return Math.max.apply(null, priceArray)
+    }
+
+    minStock() {
+      let priceArray = []
+      for(let i = 0; i < productsList.products.length; i++ ) {
+        priceArray.push(productsList.products[i].stock)
+      }
+      return Math.min.apply(null, priceArray)
+    }
+
+    maxStock() {
+      let priceArray = []
+      for(let i = 0; i < productsList.products.length; i++ ) {
+        priceArray.push(productsList.products[i].stock)
       }
       return Math.max.apply(null, priceArray)
     }
@@ -329,63 +398,38 @@ class HomePageComponent extends WFMComponent {
       }
     }
 
-    firstSlider() {
-
-      let minGap = 15;
-
+    multiSlider(event) {
+      const minGap = 1;
       const slider1 = document.querySelector('#slider-1')
       const slider2 = document.querySelector('#slider-2')
-
-      if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
-        slider1.value = parseInt(slider2.value) - minGap;
-      }
-
-      this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
-      this.makeProducts();
-    }
-
-    secondSlider() {
-
-      let minGap = 15;
-      const slider1 = document.querySelector('#slider-1')
-      const slider2 = document.querySelector('#slider-2')
-      if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
-        slider2.value = parseInt(slider1.value) + minGap;
-      }
-      this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
-      this.makeProducts();
-    }
-
-
-    firstStockSlider() {
-
-      let minGap = 1;
-
       const stockSlider1 = document.querySelector('#stock-slider-1')
       const stockSlider2 = document.querySelector('#stock-slider-2')
 
-      if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
-        stockSlider1.value = parseInt(stockSlider2.value) - minGap;
+      if(event.target.id === "slider-1") {
+        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
+          slider1.value = parseInt(slider2.value) - minGap;
+        }
+        this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
       }
-
-      this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
-      this.makeProducts();
-    }
-
-    secondStockSlider() {
-
-      let minGap = 1;
-
-      const stockSlider1 = document.querySelector('#stock-slider-1')
-      const stockSlider2 = document.querySelector('#stock-slider-2')
-
-      if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
-        stockSlider2.value = parseInt(stockSlider1.value) + minGap;
+      if(event.target.id === "slider-2") {
+        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
+          slider2.value = parseInt(slider1.value) + minGap;
+        }
+        this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
       }
-
-      this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
+      if(event.target.id === "stock-slider-1") {
+        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
+          stockSlider1.value = parseInt(stockSlider2.value) - minGap;
+        }
+        this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
+      }
+      if(event.target.id === "stock-slider-2") {
+        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
+          stockSlider2.value = parseInt(stockSlider1.value) + minGap;
+        }
+        this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
+      }
       this.makeProducts();
-
     }
 
     sortProducts(event) {
@@ -407,25 +451,18 @@ class HomePageComponent extends WFMComponent {
       this.makeProducts();
     }
 
-
     addProductToLocal(event){
-
         //узнаем айди кнопки, на которую кликнули
         let currentId = event.target.dataset.id;
-
         //находим объект в продуктах, с тем же айди
         let currentItem = productsList.products.find(elem => elem.id == currentId);
-
         //достаем локальный объект с массивами товаров
         let localArr = JSON.parse( localStorage.productsLocal)
-
         //пушим туда наш объект
         localArr.products.push(currentItem);
-
         //перезаписываем измененный локал вместо старого
         localStorage.productsLocal = JSON.stringify(localArr);
     }
-
     //удаление пока не работает
     removeProductToLocal(event){
         let id = event.target.dataset.id;
@@ -469,8 +506,8 @@ export const homePageComponent = new HomePageComponent({
               </div>
               <div class="input-range__main">
                 <div class="slider-track"></div>
-                <input class="slider" type="range" value="366" max="2565" id="slider-1" />
-                <input class="slider" type="range" value="2565" max="2565" id="slider-2" />
+                <input class="slider" type="range" id="slider-1" />
+                <input class="slider" type="range" id="slider-2" />
               </div>
             </div>
             <div class="multi-range__main">
@@ -482,8 +519,8 @@ export const homePageComponent = new HomePageComponent({
               </div>
               <div class="input-range__main">
                 <div class="slider-track"></div>
-                <input class="slider" type="range" value="5" max="30" id="stock-slider-1" />
-                <input class="slider" type="range" value="30" max="30" id="stock-slider-2" />
+                <input class="slider" type="range"  id="stock-slider-1" />
+                <input class="slider" type="range"  id="stock-slider-2" />
               </div>
             </div>
         </div>
@@ -498,6 +535,7 @@ export const homePageComponent = new HomePageComponent({
                         <option data-id="stock-DESC">Sort by stock (highest to lowest)</option>
                     </select>
                 </div>
+                <div class="main__total"></div>
                 <div class="main__search">
                     <input class="input-main__search" type="search" placeholder="Search"></input>
                 </div>
