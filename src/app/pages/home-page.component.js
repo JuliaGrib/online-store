@@ -25,7 +25,8 @@ class HomePageComponent extends WFMComponent {
           'input #slider-2': 'secondSlider',
           'input #stock-slider-1': 'firstStockSlider',
           'input #stock-slider-2': 'secondStockSlider',
-          'change .filter__main': 'filterProducts'
+          'change .filter__main': 'filterProducts',
+          'click .main__width': 'viewProducts'
       }
   }
     //вставляет товар из списка productsList на сайт
@@ -45,11 +46,14 @@ class HomePageComponent extends WFMComponent {
           let stock = params.get("stock");
           let category = params.get("category");
           let brand = params.get("brand")
+          let view = params.get("view")
 
           if(search == '') this.clearQuery("search")
           if(category == '') this.clearQuery("category")
           if(brand == '') this.clearQuery("brand")
+          if(view == '') this.clearQuery("view")
 
+          this.viewReload(view)
           this.filterReload(category)
           this.filterReload(brand)
 
@@ -173,6 +177,24 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(addItemBtn);
 
         })
+    }
+
+    viewReload(view) {
+      if(view) {
+        const container = document.querySelector('.products__main')
+        if(view == 'block') {
+          container.style.display = "grid"
+        }
+        if(view == 'list') {
+          container.style.display = "block"
+        }
+      }
+    }
+
+    viewProducts(event) {
+      let key = event.target.dataset.id;
+      this.makeQuery('view', key)
+      this.makeProducts();
     }
 
     filterProducts(event) {
@@ -429,7 +451,9 @@ export const homePageComponent = new HomePageComponent({
                     <input class="input-main__search" type="search" placeholder="Search"></input>
                 </div>
                 <div class="main__width">
-                    View
+                  View:
+                  <button data-id="block" class="block__view">block</button>
+                  <button data-id="list" class="list__view">list</button>
                 </div>
             </div>
             <div class="products__main"></div>
