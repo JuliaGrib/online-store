@@ -1,5 +1,6 @@
 import { WFMComponent } from "../../framework/index"
-import { productsList} from "../lists/products"
+import { productsList } from "../lists/products"
+import { extremum } from "./home-page.utils/extremum"
 
 class HomePageComponent extends WFMComponent {
     constructor(config){
@@ -64,31 +65,31 @@ class HomePageComponent extends WFMComponent {
             let stockSlider1 = document.querySelector('#stock-slider-1');
             let stockSlider2 = document.querySelector('#stock-slider-2');
 
-            slider1.min = this.minPrice();
-            slider1.max = this.maxPrice();
-            slider2.min = this.minPrice();
-            slider2.max = this.maxPrice();
-            stockSlider1.min = this.minStock();
-            stockSlider1.max = this.maxStock();
-            stockSlider2.min = this.minStock();
-            stockSlider2.max = this.maxStock();
+            slider1.min = extremum.minPrice();
+            slider1.max = extremum.maxPrice();
+            slider2.min = extremum.minPrice();
+            slider2.max = extremum.maxPrice();
+            stockSlider1.min = extremum.minStock();
+            stockSlider1.max = extremum.maxStock();
+            stockSlider2.min = extremum.minStock();
+            stockSlider2.max = extremum.maxStock();
 
             let params = new URLSearchParams(document.location.search);
             if(!params.get('price') && !params.get('stock')) {
-              slider1.value = this.minPrice();
-              slider2.value = this.maxPrice();
-              stockSlider1.value = this.minStock();
-              stockSlider2.value = this.maxStock();
+              slider1.value = extremum.minPrice();
+              slider2.value = extremum.maxPrice();
+              stockSlider1.value = extremum.minStock();
+              stockSlider2.value = extremum.maxStock();
             }
 
             if(params.get('price') && !params.get('stock')) {
-              stockSlider1.value = this.minStock();
-              stockSlider2.value = this.maxStock();
+              stockSlider1.value = extremum.minStock();
+              stockSlider2.value = extremum.maxStock();
             }
 
             if(!params.get('price') && params.get('stock')) {
-              slider1.value = this.minPrice();
-              slider2.value = this.maxPrice();
+              slider1.value = extremum.minPrice();
+              slider2.value = extremum.maxPrice();
             }
 
             range1.innerHTML = slider1.value
@@ -199,10 +200,10 @@ class HomePageComponent extends WFMComponent {
 
       let min = +range.split('↕')[0]
       let max = +range.split('↕')[1]
-      stockSlider1.min = this.minStock();
-      stockSlider1.max = this.maxStock();
-      stockSlider2.min = this.minStock();
-      stockSlider2.max = this.maxStock();
+      stockSlider1.min = extremum.minStock();
+      stockSlider1.max = extremum.maxStock();
+      stockSlider2.min = extremum.minStock();
+      stockSlider2.max = extremum.maxStock();
 
       stockSlider1.value = min;
       stockSlider2.value = max;
@@ -224,10 +225,10 @@ class HomePageComponent extends WFMComponent {
       let min = +range.split('↕')[0]
       let max = +range.split('↕')[1]
 
-      slider1.min = this.minPrice();
-      slider1.max = this.maxPrice();
-      slider2.min = this.minPrice();
-      slider2.max = this.maxPrice();
+      slider1.min = extremum.minPrice();
+      slider1.max = extremum.maxPrice();
+      slider2.min = extremum.minPrice();
+      slider2.max = extremum.maxPrice();
 
       slider1.value = min;
       slider2.value = max;
@@ -351,38 +352,6 @@ class HomePageComponent extends WFMComponent {
       this.makeProducts();  
     }
 
-    minPrice() {
-      let priceArray = []
-      for(let i = 0; i < productsList.products.length; i++ ) {
-        priceArray.push(productsList.products[i].price)
-      }
-      return Math.min.apply(null, priceArray)
-    }
-
-    maxPrice() {
-      let priceArray = []
-      for(let i = 0; i < productsList.products.length; i++ ) {
-        priceArray.push(productsList.products[i].price)
-      }
-      return Math.max.apply(null, priceArray)
-    }
-
-    minStock() {
-      let priceArray = []
-      for(let i = 0; i < productsList.products.length; i++ ) {
-        priceArray.push(productsList.products[i].stock)
-      }
-      return Math.min.apply(null, priceArray)
-    }
-
-    maxStock() {
-      let priceArray = []
-      for(let i = 0; i < productsList.products.length; i++ ) {
-        priceArray.push(productsList.products[i].stock)
-      }
-      return Math.max.apply(null, priceArray)
-    }
-
     makeQuery(key, value) {
       let url = new URL(window.location)
       url.searchParams.set(key, value)
@@ -469,6 +438,7 @@ class HomePageComponent extends WFMComponent {
         console.log(id)
     }
 }
+
 
 export const homePageComponent = new HomePageComponent({
     selector: 'app-home-page',
