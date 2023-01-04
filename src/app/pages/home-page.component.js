@@ -26,7 +26,9 @@ class HomePageComponent extends WFMComponent {
           'input #stock-slider-1': 'firstStockSlider',
           'input #stock-slider-2': 'secondStockSlider',
           'change .filter__main': 'filterProducts',
-          'click .main__width': 'viewProducts'
+          'click .main__width': 'viewProducts',
+          'click .reset-filters': 'resetFilters',
+          'click .copy-link': 'copyLink',
       }
   }
     //вставляет товар из списка productsList на сайт
@@ -177,6 +179,52 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(addItemBtn);
 
         })
+    }
+
+    copyLink() {
+      const copyField = document.querySelector('.copy-field')
+      const copyLink = document.querySelector('.copy-link')
+      copyLink.innerHTML = "Copied!"
+      copyLink.style.color = "orange"
+      setTimeout(() => {
+        copyLink.innerHTML = "Copy link"
+        copyLink.style.color = "black"
+      },500)
+      copyField.value =  window.location.href;
+      copyField.setAttribute('readonly', '');
+      copyField.select();
+      copyField.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+    }
+
+    resetFilters() {
+      const options = document.querySelectorAll("option")
+      const checkboxes = document.querySelectorAll('input[type=checkbox]')
+      const input = document.querySelector('.input-main__search')
+      const slider1 = document.querySelector('#slider-1');
+      const slider2 = document.querySelector('#slider-2');
+      const stockSlider1 = document.querySelector('#stock-slider-1');
+      const stockSlider2 = document.querySelector('#stock-slider-2');
+
+      let url = new URL(window.location)
+      url.searchParams.delete('category')
+      url.searchParams.delete('brand')
+      url.searchParams.delete('price')
+      url.searchParams.delete('stock')
+      url.searchParams.delete('search')
+      url.searchParams.delete('sort')
+      history.pushState(null, null, url);
+      this.visibleProducts = productsList.products;
+
+      options[0].selected = true
+      checkboxes.forEach(elem => elem.checked = false)
+      input.value = ''
+      slider1.value = "366"
+      slider2.value = "2565"
+      stockSlider1.value = "5"
+      stockSlider2.value = "30"
+      
+      this.makeProducts();  
     }
 
     viewReload(view) {
@@ -391,6 +439,9 @@ export const homePageComponent = new HomePageComponent({
     <div class="banner__main"></div>
     <div class="container__main">
         <div class="sidebar__main">
+            <button class="reset-filters">Reset filters</button>
+            <button class="copy-link">Copy link</button>
+            <input type="text" class="copy-field"/>
             <div class="filter__main">
                 <p class="filter__title">Categories</p>
                 <ul class="checkbox-category__main">
