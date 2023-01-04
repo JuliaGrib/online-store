@@ -1,8 +1,8 @@
-const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
+const ESlintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
     context: path.join(__dirname, 'src'),
@@ -32,10 +32,16 @@ module.exports = {
             { from: "./app/assets", to: "./assets" },
           ],
         }),
+        new ESlintPlugin({ extensions: 'ts' }),
     ],
 
     module: {
       rules: [
+        {
+          test: /\.ts?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
         {
           test: /\.html$/,
           use: 'html-loader'
@@ -52,5 +58,8 @@ module.exports = {
           type: 'asset/resource',
         },
       ]
-    }
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+    },
 }
