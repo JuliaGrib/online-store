@@ -38,92 +38,8 @@ class HomePageComponent extends WFMComponent {
         productsContainer.innerHTML = '';
 
         let url = new URL(window.location)
-
-        if(url.search) {
-
-          let params = new URLSearchParams(document.location.search);
-          let search = params.get("search");
-          let sort = params.get("sort");
-          let price = params.get("price");
-          let stock = params.get("stock");
-          let category = params.get("category");
-          let brand = params.get("brand")
-          let view = params.get("view")
-
-          if(search == '') this.clearQuery("search")
-          if(category == '') this.clearQuery("category")
-          if(brand == '') this.clearQuery("brand")
-          if(view == '') this.clearQuery("view")
-
-          this.viewReload(view)
-          this.filterReload(category)
-          this.filterReload(brand)
-
-          if(stock) {
-            this.visibleProducts = productsList.products;
-            let min = +stock.split('↕')[0]
-            let max = +stock.split('↕')[1]
-            let tempArray = this.visibleProducts.filter( elem => elem.stock >= min && elem.stock <= max)
-            this.visibleProducts = tempArray;
-          }
-
-          if(price) {
-            this.visibleProducts = productsList.products;
-            let min = +price.split('↕')[0]
-            let max = +price.split('↕')[1]
-            let tempArray = this.visibleProducts.filter( elem => elem.price >= min && elem.price <= max)
-            this.visibleProducts = tempArray;
-          }
-
-          if(sort) {
-            const options = document.querySelectorAll("option")
-            options.forEach((elem) => {
-              if(elem.dataset.id == sort) {
-                elem.selected = true;
-              }
-            })
-
-            if(sort === 'price-ASC') {
-              this.visibleProducts.sort((x, y) => x.price - y.price)
-            } else if (sort === 'price-DESC') {
-              this.visibleProducts.sort((x, y) => y.price - x.price)
-            }else if (sort === 'stock-ASC') {
-              this.visibleProducts.sort((x, y) => x.stock - y.stock)
-            } else if (sort === 'stock-DESC') {
-              this.visibleProducts.sort((x, y) => y.stock - x.stock)
-            }
-          }
-
-          if(search) {
-
-            this.visibleProducts = productsList.products;
-
-            let input = document.querySelector('.input-main__search')
-            input.value = search
-
-            let tempArray = [];
-            for(let i = 0; i <  this.visibleProducts.length; i++) {
-              
-              let price =  this.visibleProducts[i].price;
-              price = String(price);
-              let stock =  this.visibleProducts[i].stock;
-              stock = String(stock);
-              let title =  this.visibleProducts[i].title.toLowerCase();
-              let brand =  this.visibleProducts[i].brand.toLowerCase();
-              let category =  this.visibleProducts[i].category.toLowerCase();
-      
-              let isIncludePrice = price.includes(search);
-              let isIncludeStock = stock.includes(search);
-              let isIncludeTitle = title.includes(search);
-              let isIncludeBrand = brand.includes(search);
-              let isIncludeCategory = category.includes(search);
-              if(isIncludePrice || isIncludeStock || isIncludeTitle || isIncludeBrand || isIncludeCategory) {
-                tempArray.push( this.visibleProducts[i])
-              }
-            }
-            this.visibleProducts = tempArray;
-          }
-        } 
+        if(url.search) 
+          this.updatePage();
 
         this.visibleProducts.forEach((elem, index) => {
             
@@ -179,6 +95,91 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(addItemBtn);
 
         })
+        const total = document.querySelector('.main__total')
+        total.innerHTML = `Found: ${this.visibleProducts.length}` 
+    }
+
+    updatePage() {
+      this.visibleProducts = productsList.products;
+
+      let params = new URLSearchParams(document.location.search);
+
+      let search = params.get("search");
+      let sort = params.get("sort");
+      let price = params.get("price");
+      let stock = params.get("stock");
+      let category = params.get("category");
+      let brand = params.get("brand")
+      let view = params.get("view")
+
+      if(search == '') this.clearQuery("search")
+      if(category == '') this.clearQuery("category")
+      if(brand == '') this.clearQuery("brand")
+      if(view == '') this.clearQuery("view")
+
+      if(category) this.filterReload(category)
+      if(brand) this.filterReload(brand)
+
+      if(stock) {
+        let min = +stock.split('↕')[0]
+        let max = +stock.split('↕')[1]
+        let tempArray = this.visibleProducts.filter( elem => elem.stock >= min && elem.stock <= max)
+        this.visibleProducts = tempArray;
+      }
+
+      if(price) {
+        let min = +price.split('↕')[0]
+        let max = +price.split('↕')[1]
+        let tempArray = this.visibleProducts.filter( elem => elem.price >= min && elem.price <= max)
+        this.visibleProducts = tempArray;
+      }
+
+      if(search) {
+
+        let input = document.querySelector('.input-main__search')
+        input.value = search
+
+        let tempArray = [];
+        for(let i = 0; i <  this.visibleProducts.length; i++) {
+          
+          let price =  this.visibleProducts[i].price;
+          price = String(price);
+          let stock =  this.visibleProducts[i].stock;
+          stock = String(stock);
+          let title =  this.visibleProducts[i].title.toLowerCase();
+          let brand =  this.visibleProducts[i].brand.toLowerCase();
+          let category =  this.visibleProducts[i].category.toLowerCase();
+  
+          let isIncludePrice = price.includes(search);
+          let isIncludeStock = stock.includes(search);
+          let isIncludeTitle = title.includes(search);
+          let isIncludeBrand = brand.includes(search);
+          let isIncludeCategory = category.includes(search);
+          if(isIncludePrice || isIncludeStock || isIncludeTitle || isIncludeBrand || isIncludeCategory) {
+            tempArray.push( this.visibleProducts[i])
+          }
+        }
+        this.visibleProducts = tempArray;
+      }
+
+      if(sort) {
+        const options = document.querySelectorAll("option")
+        options.forEach((elem) => {
+          if(elem.dataset.id == sort) {
+            elem.selected = true;
+          }
+        })
+        if(sort === 'price-ASC') {
+          this.visibleProducts.sort((x, y) => x.price - y.price)
+        } else if (sort === 'price-DESC') {
+          this.visibleProducts.sort((x, y) => y.price - x.price)
+        }else if (sort === 'stock-ASC') {
+          this.visibleProducts.sort((x, y) => x.stock - y.stock)
+        } else if (sort === 'stock-DESC') {
+          this.visibleProducts.sort((x, y) => y.stock - x.stock)
+        }
+      }
+
     }
 
     copyLink() {
@@ -198,7 +199,6 @@ class HomePageComponent extends WFMComponent {
     }
 
     resetFilters() {
-      const options = document.querySelectorAll("option")
       const checkboxes = document.querySelectorAll('input[type=checkbox]')
       const input = document.querySelector('.input-main__search')
       const slider1 = document.querySelector('#slider-1');
@@ -214,16 +214,14 @@ class HomePageComponent extends WFMComponent {
       url.searchParams.delete('search')
       url.searchParams.delete('sort')
       history.pushState(null, null, url);
-      this.visibleProducts = productsList.products;
 
-      options[0].selected = true
       checkboxes.forEach(elem => elem.checked = false)
       input.value = ''
       slider1.value = "366"
       slider2.value = "2565"
       stockSlider1.value = "5"
       stockSlider2.value = "30"
-      
+      this.visibleProducts = productsList.products;
       this.makeProducts();  
     }
 
@@ -276,8 +274,6 @@ class HomePageComponent extends WFMComponent {
     }
 
     filterReload(selector) {
-      if(selector) {
-        this.visibleProducts = productsList.products;
         let keyArray = selector.split('↕');
         let tempArray = []
         for(let i = 0; i < this.visibleProducts.length; i++) {
@@ -295,7 +291,6 @@ class HomePageComponent extends WFMComponent {
           }
         })
         this.visibleProducts = tempArray;
-      }
     }
 
     minPriceProducts() {
@@ -498,6 +493,7 @@ export const homePageComponent = new HomePageComponent({
                         <option data-id="stock-DESC">Sort by stock (highest to lowest)</option>
                     </select>
                 </div>
+                <div class="main__total"></div>
                 <div class="main__search">
                     <input class="input-main__search" type="search" placeholder="Search"></input>
                 </div>
