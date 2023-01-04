@@ -70,6 +70,13 @@ class HomePageComponent extends WFMComponent {
           }
 
           if(sort) {
+            const options = document.querySelectorAll("option")
+            options.forEach((elem) => {
+              if(elem.dataset.id == sort) {
+                elem.selected = true;
+              }
+            })
+
             if(sort === 'price-ASC') {
               this.visibleProducts.sort((x, y) => x.price - y.price)
             } else if (sort === 'price-DESC') {
@@ -312,7 +319,6 @@ class HomePageComponent extends WFMComponent {
     }
 
     sortProducts(event) {
-
       if(event.target.value === "Sort by price (lowest to highest)") {
         this.makeQuery("sort", "price-ASC")
       } else if(event.target.value === "Sort by price (highest to lowest)") {
@@ -412,11 +418,11 @@ export const homePageComponent = new HomePageComponent({
             <div class="main__info">
                 <div class="main__select">
                     <select class="main__select-sort">
-                        <option disabled selected >Sort options:</option>
-                        <option>Sort by price (lowest to highest)</option>
-                        <option>Sort by price (highest to lowest)</option>
-                        <option>Sort by stock (lowest to highest)</option>
-                        <option>Sort by stock (highest to lowest)</option>
+                        <option data-id="title" disabled selected >Sort options:</option>
+                        <option data-id="price-ASC">Sort by price (lowest to highest)</option>
+                        <option data-id="price-DESC">Sort by price (highest to lowest)</option>
+                        <option data-id="stock-ASC">Sort by stock (lowest to highest)</option>
+                        <option data-id="stock-DESC">Sort by stock (highest to lowest)</option>
                     </select>
                 </div>
                 <div class="main__search">
