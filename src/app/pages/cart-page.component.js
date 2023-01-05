@@ -2,6 +2,7 @@ import { WFMComponent } from "../../framework/index";
 import { buyNow } from "./cart-page.utils/modal";
 import { paginator } from "./cart-page.utils/paginator"
 import { usedPromo } from "./cart-page.utils/used-promo"
+import { setCountOnceItem, setTempArrayProducts } from "./cart-page.utils/utils"
  
 class CartPageComponent extends WFMComponent {
   constructor(config){
@@ -48,18 +49,10 @@ class CartPageComponent extends WFMComponent {
       `
       return
     }
-    //создаем массив с колличеством каждого одинакого элемента  
-    this.countOnceItem = this.arrayProducts.products.reduce(function(acc, el) {
-      acc[el.id] = (acc[el.id] || 0) + 1;
-      return acc;
-    }, {});
+    //создаем массив с колличеством каждого одинакого элемента 
+    setCountOnceItem(); 
     //фильтруем повторяющиееся элементы 
-    this.tempArrayProducts =  this.arrayProducts.products.reduce((o, i) => {
-      if (!o.find(v => v.id == i.id)) {
-        o.push(i);
-      }
-      return o;
-    }, []); 
+    setTempArrayProducts();
 
     let params = new URLSearchParams(document.location.search);
     
@@ -271,7 +264,7 @@ class CartPageComponent extends WFMComponent {
 
     }
   }
-
+  
   buyNowWrap() {
     buyNow();
   }
