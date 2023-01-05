@@ -35,8 +35,6 @@ class HomePageComponent extends WFMComponent {
         let productsContainer = document.querySelector('.products__main');
         productsContainer.innerHTML = '';
 
-
-
         let url = new URL(window.location)
         if(url.search) 
           this.updatePage();
@@ -128,6 +126,7 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(dropItemBtn);
             
             let localArr = JSON.parse(localStorage.productsLocal)
+
             if(localArr.products.find(item => item.id == elem.id)) {
               addItemBtn.classList.remove('display-block')
               addItemBtn.classList.add('display-none')
@@ -147,7 +146,6 @@ class HomePageComponent extends WFMComponent {
 
     updateCount() {
       const checkboxes = document.querySelectorAll('input[type=checkbox]')
-      console.log(this.visibleProducts) 
       checkboxes.forEach((item) => {
         let count = 0
         this.visibleProducts.forEach((elem) => {
@@ -156,7 +154,6 @@ class HomePageComponent extends WFMComponent {
             count++
           }
         })
-        console.log(count)
         item.nextElementSibling.innerHTML = `(${count})`
         if(count === 0) {
           item.nextElementSibling.style.color ="gray";
@@ -470,28 +467,27 @@ class HomePageComponent extends WFMComponent {
     }
 
     addProductToLocal(event){
-      // const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
-      // const drop = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
-      // console.log(drop)
+      const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
+      const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
+      console.log(drop)
       let currentId = event.target.dataset.id;
       let currentItem = productsList.products.find(elem => elem.id == currentId);
       let localArr = JSON.parse( localStorage.productsLocal)
       localArr.products.push(currentItem);
       localStorage.productsLocal = JSON.stringify(localArr);
-      // add.style.color = "red"
-      // setTimeout(() => {
-      //   add.style.color = "black"
-      //   add.classList.remove('display-block')
-      //   add.classList.add('display-none')
-      //   drop.classList.remove('display-none')
-      //   drop.classList.add('display-block')
-      // }, 500)
-      this.makeProducts();
+      add.style.color = "red"
+      setTimeout(() => {
+        add.style.color = "black"
+        add.classList.remove('display-block')
+        add.classList.add('display-none')
+        drop.classList.remove('display-none')
+        drop.classList.add('display-block')
+      }, 500)
     }
 
     removeProductToLocal(event){
-      // const add = document.querySelector('.add__item')
-      // const drop = document.querySelector('.drop__item')
+      const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
+      const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
       let localArr = JSON.parse(localStorage.productsLocal)
       let currentId = event.target.dataset.id
       let currentItem = localArr.products.find(elem => elem.id == currentId);
@@ -504,15 +500,14 @@ class HomePageComponent extends WFMComponent {
       }
       localArr.products.splice(indexItem, count);
       localStorage.productsLocal = JSON.stringify(localArr);
-      this.makeProducts();
-      // drop.style.color = "red"
-      // setTimeout(() => {
-      //   drop.style.color = "black"
-      //   drop.classList.remove('display-block')
-      //   drop.classList.add('display-none')
-      //   add.classList.remove('display-none')
-      //   add.classList.add('display-block')
-      // }, 300)
+      drop.style.color = "red"
+      setTimeout(() => {
+        drop.style.color = "black"
+        drop.classList.remove('display-block')
+        drop.classList.add('display-none')
+        add.classList.remove('display-none')
+        add.classList.add('display-block')
+      }, 300)
     }
 }
 
