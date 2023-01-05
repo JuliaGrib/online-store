@@ -36,9 +36,13 @@ class HomePageComponent extends WFMComponent {
         let productsContainer = document.querySelector('.products__main');
         productsContainer.innerHTML = '';
 
+
+
         let url = new URL(window.location)
         if(url.search) 
           this.updatePage();
+
+        this.updateCount();
 
         this.visibleProducts.forEach((elem) => {
             
@@ -66,14 +70,14 @@ class HomePageComponent extends WFMComponent {
             let stockSlider1 = document.querySelector('#stock-slider-1');
             let stockSlider2 = document.querySelector('#stock-slider-2');
 
-            slider1.min = extremum.minPrice();
-            slider1.max = extremum.maxPrice();
-            slider2.min = extremum.minPrice();
-            slider2.max = extremum.maxPrice();
-            stockSlider1.min = extremum.minStock();
-            stockSlider1.max = extremum.maxStock();
-            stockSlider2.min = extremum.minStock();
-            stockSlider2.max = extremum.maxStock();
+            slider1.min = 340
+            slider1.max = 2570
+            slider2.min = 340
+            slider2.max = 2570
+            stockSlider1.min = 5
+            stockSlider1.max = 30
+            stockSlider2.min = 5
+            stockSlider2.max = 30
 
             let params = new URLSearchParams(document.location.search);
 
@@ -125,6 +129,27 @@ class HomePageComponent extends WFMComponent {
         total.innerHTML = `Found: ${this.visibleProducts.length}` 
     }
 
+    updateCount() {
+      const checkboxes = document.querySelectorAll('input[type=checkbox]')
+      console.log(this.visibleProducts) 
+      checkboxes.forEach((item) => {
+        let count = 0
+        this.visibleProducts.forEach((elem) => {
+          if(elem.brand === item.nextElementSibling.dataset.id || 
+             elem.category === item.nextElementSibling.dataset.id) {
+            count++
+          }
+        })
+        console.log(count)
+        item.nextElementSibling.innerHTML = `(${count})`
+        if(count === 0) {
+          item.nextElementSibling.style.color ="gray";
+        } else {
+          item.nextElementSibling.style.color ="black";
+        }
+      })
+      }
+
     updatePage() {
       this.visibleProducts = productsList.products;
 
@@ -150,7 +175,6 @@ class HomePageComponent extends WFMComponent {
       if(price) this.updatePriceRange(price)
       if(search) this.updateSearch(search)
       if(sort) this.updateSort(sort);
-
     }
 
     updateSort(sort) {
@@ -314,6 +338,7 @@ class HomePageComponent extends WFMComponent {
           }
         })
         this.visibleProducts = tempArray;
+        
     }
 
     copyLink() {
@@ -375,33 +400,34 @@ class HomePageComponent extends WFMComponent {
     }
 
     multiSlider(event) {
-      const minGap = 1;
+      const minGapPrice = 160;
+      const minGapStock = 1;
       const slider1 = document.querySelector('#slider-1')
       const slider2 = document.querySelector('#slider-2')
       const stockSlider1 = document.querySelector('#stock-slider-1')
       const stockSlider2 = document.querySelector('#stock-slider-2')
 
       if(event.target.id === "slider-1") {
-        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
-          slider1.value = parseInt(slider2.value) - minGap;
+        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGapPrice) {
+          slider1.value = parseInt(slider2.value) - minGapPrice;
         }
         this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
       }
       if(event.target.id === "slider-2") {
-        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
-          slider2.value = parseInt(slider1.value) + minGap;
+        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGapPrice) {
+          slider2.value = parseInt(slider1.value) + minGapPrice;
         }
         this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
       }
       if(event.target.id === "stock-slider-1") {
-        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
-          stockSlider1.value = parseInt(stockSlider2.value) - minGap;
+        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGapStock) {
+          stockSlider1.value = parseInt(stockSlider2.value) - minGapStock;
         }
         this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
       }
       if(event.target.id === "stock-slider-2") {
-        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
-          stockSlider2.value = parseInt(stockSlider1.value) + minGap;
+        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGapStock) {
+          stockSlider2.value = parseInt(stockSlider1.value) + minGapStock;
         }
         this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
       }
@@ -468,19 +494,51 @@ export const homePageComponent = new HomePageComponent({
             <div class="filter__main">
                 <p class="filter__title">Categories</p>
                 <ul class="checkbox-category__main">
-                    <li><input class="category"  type="checkbox" name="sofa" value="sofa">Sofa</li>
-                    <li><input class="category" type="checkbox" name="armchair" value="armchair">Armchair</li>
-                    <li><input class="category" type="checkbox" name="table" value="table">Table</li>
-                    <li><input class="category" type="checkbox" name="chair" value="chair">Сhair</li>
+                    <li>
+                      <input class="category"  type="checkbox" name="sofa" value="sofa">
+                      Sofa
+                      <div class="count__category" data-id="Sofa">(5)</div>
+                    </li>
+                    <li>
+                      <input class="category" type="checkbox" name="armchair" value="armchair">
+                      Armchair
+                      <div class="count__category" data-id="Armchair">(5)</div>
+                    </li>
+                    <li>
+                      <input class="category" type="checkbox" name="table" value="table">
+                      Table
+                      <div class="count__category" data-id="Table">(5)</div>
+                    </li>
+                    <li>
+                      <input class="category" type="checkbox" name="chair" value="chair">
+                      Сhair
+                      <div class="count__category" data-id="Chair">(5)</div>
+                    </li>
                 </ul>
             </div>
             <div class="filter__main">
                 <p class="filter__title">Brand</p>
                 <ul>
-                    <li><input class="brand" type="checkbox" name="viena" value="viena">Viena</li>
-                    <li><input class="brand" type="checkbox" name="numo" value="numo">Numo</li>
-                    <li><input class="brand" type="checkbox" name="dins" value="dins">Dins</li>
-                    <li><input class="brand" type="checkbox" name="abby" value="abby">Abby</li>
+                    <li>
+                      <input class="brand" type="checkbox" name="viena" value="viena">
+                      Viena
+                      <div class="count__brand" data-id="Viena">(5)</div>
+                      </li>
+                    <li>
+                      <input class="brand" type="checkbox" name="numo" value="numo">
+                      Numo
+                      <div class="count__brand" data-id="Numo">(5)</div>
+                    </li>
+                    <li>
+                      <input class="brand" type="checkbox" name="dins" value="dins">
+                      Dins
+                      <div class="count__brand" data-id="Dins">(5)</div>
+                    </li>
+                    <li>
+                      <input class="brand" type="checkbox" name="abby" value="abby">
+                      Abby
+                      <div class="count__brand" data-id="Abby">(5)</div>
+                      </li>
                 </ul>
             </div>
             <div class="multi-range__main">

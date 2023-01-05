@@ -38,7 +38,8 @@
 }
 
 .filter__main ul li {
-    padding: 5px 0;
+    display: flex;
+    padding: 3px 0;
 }
 
 .main__info {
