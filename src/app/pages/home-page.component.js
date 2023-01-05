@@ -44,8 +44,9 @@ class HomePageComponent extends WFMComponent {
         this.visibleProducts.forEach((elem) => {
             
             let productElem = document.createElement('div');
+            let linkItem = document.createElement('a');
             let productImg = document.createElement('img');
-            let titleItem = document.createElement('a');
+            let titleItem = document.createElement('p');
             let priceContainer = document.createElement('div');
             let priceItem = document.createElement('p');
             let addItemBtn = document.createElement('a');
@@ -53,6 +54,7 @@ class HomePageComponent extends WFMComponent {
             let stockItem = document.createElement('div');
 
             productElem.classList.add('elem__item');
+            linkItem.classList.add('link__item');
             priceContainer.classList.add('price__container');
             titleItem.classList.add('title__item');
             priceItem.classList.add('price__item');
@@ -105,7 +107,7 @@ class HomePageComponent extends WFMComponent {
             stockRange2.innerHTML = stockSlider2.value
 
             productImg.src = elem.thumbnail;
-            titleItem.href = `#about-product/${elem.id}`;
+            linkItem.href = `#about-product/${elem.id}`;
             titleItem.innerHTML = elem.title;
             priceItem.innerHTML = `$${elem.price}`;
             addItemBtn.setAttribute('data-id', `${elem.id}`);
@@ -117,11 +119,13 @@ class HomePageComponent extends WFMComponent {
            
 
             productsContainer.appendChild(productElem);
+            productElem.appendChild(linkItem);
             productElem.appendChild(productImg);
             productElem.appendChild(titleItem);
+            productElem.appendChild(stockItem);
             productElem.appendChild(priceContainer);
             priceContainer.appendChild(priceItem);
-            priceContainer.appendChild(stockItem)
+            
             priceContainer.appendChild(addItemBtn);
             priceContainer.appendChild(dropItemBtn);
             
@@ -515,113 +519,130 @@ class HomePageComponent extends WFMComponent {
 export const homePageComponent = new HomePageComponent({
     selector: 'app-home-page',
     template: /*html*/`
-    <div class="banner__main"></div>
-    <div class="container__main">
-        <div class="sidebar__main">
-            <button class="reset-filters">Reset filters</button>
-            <button class="copy-link">Copy link</button>
-            <input type="text" class="copy-field"/>
-            <div class="filter__main">
-                <p class="filter__title">Categories</p>
-                <ul class="checkbox-category__main">
-                    <li>
-                      <input class="category"  type="checkbox" name="sofa" value="sofa">
-                      Sofa
-                      <div class="count__category" data-id="Sofa">(5)</div>
-                    </li>
-                    <li>
-                      <input class="category" type="checkbox" name="armchair" value="armchair">
-                      Armchair
-                      <div class="count__category" data-id="Armchair">(5)</div>
-                    </li>
-                    <li>
-                      <input class="category" type="checkbox" name="table" value="table">
-                      Table
-                      <div class="count__category" data-id="Table">(5)</div>
-                    </li>
-                    <li>
-                      <input class="category" type="checkbox" name="chair" value="chair">
-                      Сhair
-                      <div class="count__category" data-id="Chair">(5)</div>
-                    </li>
-                </ul>
-            </div>
-            <div class="filter__main">
-                <p class="filter__title">Brand</p>
-                <ul>
-                    <li>
-                      <input class="brand" type="checkbox" name="viena" value="viena">
-                      Viena
-                      <div class="count__brand" data-id="Viena">(5)</div>
-                      </li>
-                    <li>
-                      <input class="brand" type="checkbox" name="numo" value="numo">
-                      Numo
-                      <div class="count__brand" data-id="Numo">(5)</div>
-                    </li>
-                    <li>
-                      <input class="brand" type="checkbox" name="dins" value="dins">
-                      Dins
-                      <div class="count__brand" data-id="Dins">(5)</div>
-                    </li>
-                    <li>
-                      <input class="brand" type="checkbox" name="abby" value="abby">
-                      Abby
-                      <div class="count__brand" data-id="Abby">(5)</div>
-                      </li>
-                </ul>
-            </div>
-            <div class="multi-range__main">
-              <h3>Price</h3>
-              <div class="price-range__main">
-                <span id="range-1"></span>
-                <span>&dash;</span>
-                <span id="range-2"></span>
-              </div>
-              <div class="input-range__main">
-                <div class="slider-track"></div>
-                <input class="slider" type="range" id="slider-1" />
-                <input class="slider" type="range" id="slider-2" />
-              </div>
-            </div>
-            <div class="multi-range__main">
-              <h3>Stock</h3>
-              <div class="price-range__main">
-                <span id="stock-range-1"></span>
-                <span>&dash;</span>
-                <span id="stock-range-2"></span>
-              </div>
-              <div class="input-range__main">
-                <div class="slider-track"></div>
-                <input class="slider" type="range"  id="stock-slider-1" />
-                <input class="slider" type="range"  id="stock-slider-2" />
-              </div>
-            </div>
+    
+    <div class="banner__main">
+      <div class="wrapper__content">
+        <div class="wrapper__text">New collection in 2023</div>
+        <div class="wrapper__img"><img src="../assets/main/sofa-banner.png"></div>
+      </div>
+      <div class="design__line">
+        <div class="wrapper__main">
+            <div class="design__text">New Arrivals</div>
         </div>
-        <div class="main__content">
-            <div class="main__info">
-                <div class="main__select">
-                    <select class="main__select-sort">
-                        <option data-id="title" disabled selected >Sort options:</option>
-                        <option data-id="price-ASC">Sort by price (lowest to highest)</option>
-                        <option data-id="price-DESC">Sort by price (highest to lowest)</option>
-                        <option data-id="stock-ASC">Sort by stock (lowest to highest)</option>
-                        <option data-id="stock-DESC">Sort by stock (highest to lowest)</option>
-                    </select>
-                </div>
-                <div class="main__total"></div>
-                <div class="main__search">
-                    <input class="input-main__search" type="search" placeholder="Search"></input>
-                </div>
-                <div class="main__width">
-                  View:
-                  <button data-id="block" class="block__view">block</button>
-                  <button data-id="list" class="list__view">list</button>
-                </div>
-            </div>
-            <div class="products__main"></div>
-        </div>
+      </div>
     </div>
+
+      <div class="wrapper__main">
+      <div class="vertical__line"></div>   
+        <div class="container__main">
+
+            <div class="sidebar__main">
+              <div class="sidebar__title">Filter by</div>
+                <a class="reset-filters">Reset filters</a>
+                <a class="copy-link">Copy link</a>
+                <input type="text" class="copy-field"/>
+                <div class="filter__main">
+                    <p class="filter__title">Categories</p>
+                    <ul class="checkbox-category__main">
+                        <li>
+                          <input class="category"  type="checkbox" name="sofa" value="sofa">
+                          Sofa
+                          <div class="count__category" data-id="Sofa">(5)</div>
+                        </li>
+                        <li>
+                          <input class="category" type="checkbox" name="armchair" value="armchair">
+                          Armchair
+                          <div class="count__category" data-id="Armchair">(5)</div>
+                        </li>
+                        <li>
+                          <input class="category" type="checkbox" name="table" value="table">
+                          Table
+                          <div class="count__category" data-id="Table">(5)</div>
+                        </li>
+                        <li>
+                          <input class="category" type="checkbox" name="chair" value="chair">
+                          Сhair
+                          <div class="count__category" data-id="Chair">(5)</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filter__main">
+                    <p class="filter__title">Brand</p>
+                    <ul>
+                        <li>
+                          <input class="brand" type="checkbox" name="viena" value="viena">
+                          Viena
+                          <div class="count__brand" data-id="Viena">(5)</div>
+                          </li>
+                        <li>
+                          <input class="brand" type="checkbox" name="numo" value="numo">
+                          Numo
+                          <div class="count__brand" data-id="Numo">(5)</div>
+                        </li>
+                        <li>
+                          <input class="brand" type="checkbox" name="dins" value="dins">
+                          Dins
+                          <div class="count__brand" data-id="Dins">(5)</div>
+                        </li>
+                        <li>
+                          <input class="brand" type="checkbox" name="abby" value="abby">
+                          Abby
+                          <div class="count__brand" data-id="Abby">(5)</div>
+                          </li>
+                    </ul>
+                </div>
+                <div class="multi-range__main">
+                  <h3 class="filter__title">Price</h3>
+                  <div class="price-range__main">
+                    <span id="range-1"></span>
+                    <span>&dash;</span>
+                    <span id="range-2"></span>
+                  </div>
+                  <div class="input-range__main">
+                    <div class="slider-track"></div>
+                    <input class="slider" type="range" id="slider-1" />
+                    <input class="slider" type="range" id="slider-2" />
+                  </div>
+                </div>
+                <div class="multi-range__main">
+                  <h3 class="filter__title">Stock</h3>
+                  <div class="price-range__main">
+                    <span id="stock-range-1"></span>
+                    <span>&dash;</span>
+                    <span id="stock-range-2"></span>
+                  </div>
+                  <div class="input-range__main">
+                    <div class="slider-track"></div>
+                    <input class="slider" type="range"  id="stock-slider-1" />
+                    <input class="slider" type="range"  id="stock-slider-2" />
+                  </div>
+                </div>
+            </div>
+            <div class="main__content">
+                <div class="main__info">
+                    <div class="main__select">
+                        <select class="main__select-sort">
+                            <option data-id="title" disabled selected >Sort options:</option>
+                            <option data-id="price-ASC">Sort by price (lowest to highest)</option>
+                            <option data-id="price-DESC">Sort by price (highest to lowest)</option>
+                            <option data-id="stock-ASC">Sort by stock (lowest to highest)</option>
+                            <option data-id="stock-DESC">Sort by stock (highest to lowest)</option>
+                        </select>
+                    </div>
+                    <div class="main__total"></div>
+                    <div class="main__search">
+                        <input class="input-main__search" type="search" placeholder="Search"></input>
+                    </div>
+                    <div class="main__width">
+                      <span>View:</span>
+                      <a class="block__view"><img data-id="block" src="../assets/main/block.svg"></a>
+                      <a class="list__view"><img data-id="list" src="../assets/main/list.svg"></a>
+                    </div>
+                </div>
+                <div class="products__main"></div>
+            </div>
+        </div>
+      </div>
     `
 })
 
