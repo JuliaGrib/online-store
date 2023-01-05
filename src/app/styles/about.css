@@ -33,3 +33,11 @@
 .info__product {
   padding: 5%;
 }
+
+.display-none {
+  display: none
+}
+
+.display-block {
+  display: block;
+}
