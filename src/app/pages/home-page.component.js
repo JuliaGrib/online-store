@@ -1,6 +1,7 @@
 import { WFMComponent } from "../../framework/index"
 import { productsList } from "../lists/products"
 import { extremum } from "./home-page.utils/extremum"
+import { cartPageComponent } from "./cart-page.component"
 
 class HomePageComponent extends WFMComponent {
     constructor(config){
@@ -31,7 +32,7 @@ class HomePageComponent extends WFMComponent {
   }
     //вставляет товар из списка productsList на сайт
     makeProducts(){
-
+        
         let productsContainer = document.querySelector('.products__main');
         productsContainer.innerHTML = '';
 
@@ -75,6 +76,7 @@ class HomePageComponent extends WFMComponent {
             stockSlider2.max = extremum.maxStock();
 
             let params = new URLSearchParams(document.location.search);
+
             if(!params.get('price') && !params.get('stock')) {
               slider1.value = extremum.minPrice();
               slider2.value = extremum.maxPrice();
@@ -114,6 +116,11 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(addItemBtn);
 
         })
+
+        if(this.visibleProducts.length === 0) {
+          productsContainer.innerHTML = 'No products found';
+        }
+
         const total = document.querySelector('.main__total')
         total.innerHTML = `Found: ${this.visibleProducts.length}` 
     }
@@ -431,6 +438,15 @@ class HomePageComponent extends WFMComponent {
         localArr.products.push(currentItem);
         //перезаписываем измененный локал вместо старого
         localStorage.productsLocal = JSON.stringify(localArr);
+
+        let tempArray =  localArr.products.reduce((o, i) => {
+          if (!o.find(v => v.id == i.id)) {
+            o.push(i);
+          }
+          return o;
+        }, []); 
+
+
     }
     //удаление пока не работает
     removeProductToLocal(event){
