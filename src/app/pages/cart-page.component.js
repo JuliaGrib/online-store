@@ -320,40 +320,45 @@ class CartPageComponent extends WFMComponent {
 export const cartPageComponent = new CartPageComponent({
     selector: 'app-cart-page',
     template: /*html*/`
-      <div class="container__cart">
+    <div class="vertical__text">New Arrival</div>
+      <div class="wrapper__main">
+          
+          <div class="container__cart">
 
-        <div class="products__cart">
-          <div class="title-items__cart">
-            <h2>Products in cart</h2>
-            <div class="count-items__cart">Items: N</div>
-            <div class="pages__cart">
-
+          <div class="products__cart">
+            <div class="title-items__cart">
+              <h2>Products in cart</h2>
+              <div class="count-items__cart">Items: N</div>
+              <div class="pages__cart">
+            
+              </div>
+            </div>
+            <div class="item-products__cart">
+              
             </div>
           </div>
-          <div class="item-products__cart">
-            
-          </div>
-        </div>
-        
-        <div class="order__cart">
-          <div class="title-order__cart">Summary</div>
-          <div class="total-products__cart">Products: N</div>
-          <div class="total-price__cart">Total price: N</div> 
-          <div class="applied-promo-container__cart">
-          </div>
-          <div class="new-price__cart">N</div> 
-          <div class="test-promo__cart">Test promo: rs | epam</div>
-          <div class="succes-promo-container__car">
-
           
+          <div class="order__cart">
+            <div class="title-order__cart">Summary</div>
+            <div class="total-products__cart">Products: N</div>
+            <div class="total-price__cart">Total price: N</div> 
+            <div class="applied-promo-container__cart">
+            </div>
+            <div class="new-price__cart">N</div> 
+            <div class="test-promo__cart">Test promo: rs | epam</div>
+            <div class="succes-promo-container__car">
 
+            
+
+            </div>
+            <div class="promo__cart">
+              <input id="input-promo" class="input-promo__cart" type="search" minlength="6" maxlength="6" placeholder="Enter promo code"/>
+            </div>
+            <button class="buy-now-button__cart">Buy now</button>
           </div>
-          <div class="promo__cart">
-            <input id="input-promo" class="input-promo__cart" type="search" minlength="6" maxlength="6" placeholder="Enter promo code"/>
-          </div>
-          <button class="buy-now-button__cart">Buy now</button>
+
         </div>
-
+      
       </div>
     `
 })
