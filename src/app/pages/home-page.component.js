@@ -1,7 +1,6 @@
 import { WFMComponent } from "../../framework/index"
 import { productsList } from "../lists/products"
 import { extremum } from "./home-page.utils/extremum"
-import { cartPageComponent } from "./cart-page.component"
 
 class HomePageComponent extends WFMComponent {
     constructor(config){
@@ -20,7 +19,7 @@ class HomePageComponent extends WFMComponent {
     events() {
       return {
           'click .add__item': 'addProductToLocal',
-          'click .remove__item': 'removeProductToLocal',
+          'click .drop__item': 'removeProductToLocal',
           'input .input-main__search': 'searchProduct',
           'change .main__select-sort': 'sortProducts',
           'input .slider': 'multiSlider',
@@ -35,8 +34,6 @@ class HomePageComponent extends WFMComponent {
         
         let productsContainer = document.querySelector('.products__main');
         productsContainer.innerHTML = '';
-
-
 
         let url = new URL(window.location)
         if(url.search) 
@@ -53,6 +50,7 @@ class HomePageComponent extends WFMComponent {
             let priceContainer = document.createElement('div');
             let priceItem = document.createElement('p');
             let addItemBtn = document.createElement('a');
+            let dropItemBtn = document.createElement('a');
             let stockItem = document.createElement('div');
 
             productElem.classList.add('elem__item');
@@ -62,6 +60,9 @@ class HomePageComponent extends WFMComponent {
             priceItem.classList.add('price__item');
             stockItem.classList.add('stock__item')
             addItemBtn.classList.add('add__item');
+            dropItemBtn.classList.add('drop__item')
+            dropItemBtn.classList.add('display-none')
+            addItemBtn.classList.add('display-block')
 
             let range1 = document.querySelector('#range-1');
             let range2 = document.querySelector('#range-2');
@@ -110,8 +111,12 @@ class HomePageComponent extends WFMComponent {
             titleItem.innerHTML = elem.title;
             priceItem.innerHTML = `$${elem.price}`;
             addItemBtn.setAttribute('data-id', `${elem.id}`);
+            dropItemBtn.setAttribute('data-id', `${elem.id}`);
             addItemBtn.innerHTML = 'Add to cart';
+            dropItemBtn.innerHTML = 'Drop from cart';
             stockItem.innerHTML = `Stock: ${elem.stock}`;
+
+           
 
             productsContainer.appendChild(productElem);
             productElem.appendChild(linkItem);
@@ -122,6 +127,16 @@ class HomePageComponent extends WFMComponent {
             priceContainer.appendChild(priceItem);
             
             priceContainer.appendChild(addItemBtn);
+            priceContainer.appendChild(dropItemBtn);
+            
+            let localArr = JSON.parse(localStorage.productsLocal)
+
+            if(localArr.products.find(item => item.id == elem.id)) {
+              addItemBtn.classList.remove('display-block')
+              addItemBtn.classList.add('display-none')
+              dropItemBtn.classList.remove('display-none')
+              dropItemBtn.classList.add('display-block')
+            } 
 
         })
 
@@ -135,7 +150,6 @@ class HomePageComponent extends WFMComponent {
 
     updateCount() {
       const checkboxes = document.querySelectorAll('input[type=checkbox]')
-      console.log(this.visibleProducts) 
       checkboxes.forEach((item) => {
         let count = 0
         this.visibleProducts.forEach((elem) => {
@@ -144,7 +158,6 @@ class HomePageComponent extends WFMComponent {
             count++
           }
         })
-        console.log(count)
         item.nextElementSibling.innerHTML = `(${count})`
         if(count === 0) {
           item.nextElementSibling.style.color ="gray";
@@ -458,30 +471,47 @@ class HomePageComponent extends WFMComponent {
     }
 
     addProductToLocal(event){
-        //узнаем айди кнопки, на которую кликнули
-        let currentId = event.target.dataset.id;
-        //находим объект в продуктах, с тем же айди
-        let currentItem = productsList.products.find(elem => elem.id == currentId);
-        //достаем локальный объект с массивами товаров
-        let localArr = JSON.parse( localStorage.productsLocal)
-        //пушим туда наш объект
-        localArr.products.push(currentItem);
-        //перезаписываем измененный локал вместо старого
-        localStorage.productsLocal = JSON.stringify(localArr);
-
-        let tempArray =  localArr.products.reduce((o, i) => {
-          if (!o.find(v => v.id == i.id)) {
-            o.push(i);
-          }
-          return o;
-        }, []); 
-
-
+      const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
+      const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
+      console.log(drop)
+      let currentId = event.target.dataset.id;
+      let currentItem = productsList.products.find(elem => elem.id == currentId);
+      let localArr = JSON.parse( localStorage.productsLocal)
+      localArr.products.push(currentItem);
+      localStorage.productsLocal = JSON.stringify(localArr);
+      add.style.color = "red"
+      setTimeout(() => {
+        add.style.color = "black"
+        add.classList.remove('display-block')
+        add.classList.add('display-none')
+        drop.classList.remove('display-none')
+        drop.classList.add('display-block')
+      }, 500)
     }
-    //удаление пока не работает
+
     removeProductToLocal(event){
-        let id = event.target.dataset.id;
-        console.log(id)
+      const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
+      const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
+      let localArr = JSON.parse(localStorage.productsLocal)
+      let currentId = event.target.dataset.id
+      let currentItem = localArr.products.find(elem => elem.id == currentId);
+      let indexItem = localArr.products.indexOf(currentItem)
+      let count = 0
+      for(let elem of localArr.products) {
+        if(elem.id == currentId) {
+          count++
+        }
+      }
+      localArr.products.splice(indexItem, count);
+      localStorage.productsLocal = JSON.stringify(localArr);
+      drop.style.color = "red"
+      setTimeout(() => {
+        drop.style.color = "black"
+        drop.classList.remove('display-block')
+        drop.classList.add('display-none')
+        add.classList.remove('display-none')
+        add.classList.add('display-block')
+      }, 300)
     }
 }
 
