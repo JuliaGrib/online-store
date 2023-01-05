@@ -36,9 +36,13 @@ class HomePageComponent extends WFMComponent {
         let productsContainer = document.querySelector('.products__main');
         productsContainer.innerHTML = '';
 
+
+
         let url = new URL(window.location)
         if(url.search) 
           this.updatePage();
+
+        this.updateCount();
 
         this.visibleProducts.forEach((elem) => {
             
@@ -125,6 +129,27 @@ class HomePageComponent extends WFMComponent {
         total.innerHTML = `Found: ${this.visibleProducts.length}` 
     }
 
+    updateCount() {
+      const checkboxes = document.querySelectorAll('input[type=checkbox]')
+      console.log(this.visibleProducts) 
+      checkboxes.forEach((item) => {
+        let count = 0
+        this.visibleProducts.forEach((elem) => {
+          if(elem.brand === item.nextElementSibling.dataset.id || 
+             elem.category === item.nextElementSibling.dataset.id) {
+            count++
+          }
+        })
+        console.log(count)
+        item.nextElementSibling.innerHTML = `(${count})`
+        if(count === 0) {
+          item.nextElementSibling.style.color ="gray";
+        } else {
+          item.nextElementSibling.style.color ="black";
+        }
+      })
+      }
+
     updatePage() {
       this.visibleProducts = productsList.products;
 
@@ -150,7 +175,6 @@ class HomePageComponent extends WFMComponent {
       if(price) this.updatePriceRange(price)
       if(search) this.updateSearch(search)
       if(sort) this.updateSort(sort);
-
     }
 
     updateSort(sort) {
@@ -314,6 +338,7 @@ class HomePageComponent extends WFMComponent {
           }
         })
         this.visibleProducts = tempArray;
+        
     }
 
     copyLink() {
@@ -468,19 +493,51 @@ export const homePageComponent = new HomePageComponent({
             <div class="filter__main">
                 <p class="filter__title">Categories</p>
                 <ul class="checkbox-category__main">
-                    <li><input class="category"  type="checkbox" name="sofa" value="sofa">Sofa</li>
-                    <li><input class="category" type="checkbox" name="armchair" value="armchair">Armchair</li>
-                    <li><input class="category" type="checkbox" name="table" value="table">Table</li>
-                    <li><input class="category" type="checkbox" name="chair" value="chair">Сhair</li>
+                    <li>
+                      <input class="category"  type="checkbox" name="sofa" value="sofa">
+                      Sofa
+                      <div class="count__category" data-id="Sofa">(5)</div>
+                    </li>
+                    <li>
+                      <input class="category" type="checkbox" name="armchair" value="armchair">
+                      Armchair
+                      <div class="count__category" data-id="Armchair">(5)</div>
+                    </li>
+                    <li>
+                      <input class="category" type="checkbox" name="table" value="table">
+                      Table
+                      <div class="count__category" data-id="Table">(5)</div>
+                    </li>
+                    <li>
+                      <input class="category" type="checkbox" name="chair" value="chair">
+                      Сhair
+                      <div class="count__category" data-id="Chair">(5)</div>
+                    </li>
                 </ul>
             </div>
             <div class="filter__main">
                 <p class="filter__title">Brand</p>
                 <ul>
-                    <li><input class="brand" type="checkbox" name="viena" value="viena">Viena</li>
-                    <li><input class="brand" type="checkbox" name="numo" value="numo">Numo</li>
-                    <li><input class="brand" type="checkbox" name="dins" value="dins">Dins</li>
-                    <li><input class="brand" type="checkbox" name="abby" value="abby">Abby</li>
+                    <li>
+                      <input class="brand" type="checkbox" name="viena" value="viena">
+                      Viena
+                      <div class="count__brand" data-id="Viena">(5)</div>
+                      </li>
+                    <li>
+                      <input class="brand" type="checkbox" name="numo" value="numo">
+                      Numo
+                      <div class="count__brand" data-id="Numo">(5)</div>
+                    </li>
+                    <li>
+                      <input class="brand" type="checkbox" name="dins" value="dins">
+                      Dins
+                      <div class="count__brand" data-id="Dins">(5)</div>
+                    </li>
+                    <li>
+                      <input class="brand" type="checkbox" name="abby" value="abby">
+                      Abby
+                      <div class="count__brand" data-id="Abby">(5)</div>
+                      </li>
                 </ul>
             </div>
             <div class="multi-range__main">
