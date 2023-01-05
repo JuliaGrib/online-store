@@ -261,7 +261,9 @@ export const buyNow = function() {
   })
 
   close.addEventListener('click', function() {
-    console.log("close")
+    let url = new URL(window.location)
+    url.searchParams.delete('buy')
+    history.pushState(null, null, url);
     buyNow.remove();
   })
 

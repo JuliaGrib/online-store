@@ -60,6 +60,13 @@ class CartPageComponent extends WFMComponent {
       }
       return o;
     }, []); 
+
+    let params = new URLSearchParams(document.location.search);
+    
+    if(params.get('buy')) {
+      buyNow();
+    }
+
     const countProductsCart = document.querySelector('.count-items__cart');
     const totalProductsCart = document.querySelector('.total-products__cart')
     const totalPriceCart = document.querySelector('.total-price__cart')
