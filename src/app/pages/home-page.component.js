@@ -605,8 +605,8 @@ export const homePageComponent = new HomePageComponent({
                     </div>
                     <div class="main__width">
                       <span>View:</span>
-                      <a data-id="block" class="block__view"><img src="../assets/main/block.svg"></a>
-                      <a data-id="list" class="list__view"><img src="../assets/main/list.svg"></a>
+                      <a class="block__view"><img data-id="block" src="../assets/main/block.svg"></a>
+                      <a class="list__view"><img data-id="list" src="../assets/main/list.svg"></a>
                     </div>
                 </div>
                 <div class="products__main"></div>
