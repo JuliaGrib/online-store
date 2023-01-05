@@ -70,14 +70,14 @@ class HomePageComponent extends WFMComponent {
             let stockSlider1 = document.querySelector('#stock-slider-1');
             let stockSlider2 = document.querySelector('#stock-slider-2');
 
-            slider1.min = extremum.minPrice();
-            slider1.max = extremum.maxPrice();
-            slider2.min = extremum.minPrice();
-            slider2.max = extremum.maxPrice();
-            stockSlider1.min = extremum.minStock();
-            stockSlider1.max = extremum.maxStock();
-            stockSlider2.min = extremum.minStock();
-            stockSlider2.max = extremum.maxStock();
+            slider1.min = 340
+            slider1.max = 2570
+            slider2.min = 340
+            slider2.max = 2570
+            stockSlider1.min = 5
+            stockSlider1.max = 30
+            stockSlider2.min = 5
+            stockSlider2.max = 30
 
             let params = new URLSearchParams(document.location.search);
 
@@ -400,33 +400,34 @@ class HomePageComponent extends WFMComponent {
     }
 
     multiSlider(event) {
-      const minGap = 1;
+      const minGapPrice = 160;
+      const minGapStock = 1;
       const slider1 = document.querySelector('#slider-1')
       const slider2 = document.querySelector('#slider-2')
       const stockSlider1 = document.querySelector('#stock-slider-1')
       const stockSlider2 = document.querySelector('#stock-slider-2')
 
       if(event.target.id === "slider-1") {
-        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
-          slider1.value = parseInt(slider2.value) - minGap;
+        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGapPrice) {
+          slider1.value = parseInt(slider2.value) - minGapPrice;
         }
         this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
       }
       if(event.target.id === "slider-2") {
-        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGap) {
-          slider2.value = parseInt(slider1.value) + minGap;
+        if(parseInt(slider2.value) - parseInt(slider1.value) <= minGapPrice) {
+          slider2.value = parseInt(slider1.value) + minGapPrice;
         }
         this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
       }
       if(event.target.id === "stock-slider-1") {
-        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
-          stockSlider1.value = parseInt(stockSlider2.value) - minGap;
+        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGapStock) {
+          stockSlider1.value = parseInt(stockSlider2.value) - minGapStock;
         }
         this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
       }
       if(event.target.id === "stock-slider-2") {
-        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGap) {
-          stockSlider2.value = parseInt(stockSlider1.value) + minGap;
+        if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGapStock) {
+          stockSlider2.value = parseInt(stockSlider1.value) + minGapStock;
         }
         this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
       }
