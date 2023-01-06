@@ -24,3 +24,12 @@
   list-style: none;
   margin-right: 20px;
 }
+
+.cart__header {
+  display: flex;
+  align-items: center;
+}
+
+.count__header {
+  padding-left: 15px;
+}

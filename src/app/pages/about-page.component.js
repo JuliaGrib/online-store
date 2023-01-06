@@ -1,6 +1,7 @@
 import { WFMComponent } from "../../framework/index";
 import { productsList} from "../lists/products"
 import { parseURL } from './about-page.utils/parse-url'
+import { headerCounter } from "../common/header.utils/counter"
 
 class AboutPageComponent extends WFMComponent {
   constructor(config){
@@ -66,6 +67,7 @@ class AboutPageComponent extends WFMComponent {
     localArr.products.push(currentItem);
     localStorage.productsLocal = JSON.stringify(localArr);
     add.style.color = "red"
+    headerCounter();
     setTimeout(() => {
       add.style.color = "black"
       add.classList.remove('display-block')
@@ -91,6 +93,7 @@ class AboutPageComponent extends WFMComponent {
     }
     localArr.products.splice(indexItem, count);
     localStorage.productsLocal = JSON.stringify(localArr);
+    headerCounter();
     drop.style.color = "red"
     setTimeout(() => {
       drop.style.color = "black"
@@ -108,6 +111,7 @@ class AboutPageComponent extends WFMComponent {
       let currentItem = productsList.products.find(elem => elem.id == id)
       localArr.products.push(currentItem);
       localStorage.productsLocal = JSON.stringify(localArr);
+      headerCounter();
     }
     document.location='?buy=da#cart'
   }
