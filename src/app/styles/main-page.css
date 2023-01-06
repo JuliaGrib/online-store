@@ -191,15 +191,6 @@
     text-decoration: underline;
 }
 
-.drop__item {
-  color: rgb(102, 102, 102);
-  transition: 0.5s;
-}
-.drop__item:hover {
-  cursor: pointer;
-  color: rgb(43, 156, 64);
-}
-
 .multi-range__main {
   padding: 40px 0 0 0;
   overflow: hidden;
