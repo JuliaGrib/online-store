@@ -3,7 +3,8 @@ import { buyNow } from "./cart-page.utils/modal";
 import { paginator } from "./cart-page.utils/paginator"
 import { usedPromo } from "./cart-page.utils/used-promo"
 import { setCountOnceItem, setTempArrayProducts } from "./cart-page.utils/utils"
- 
+import { headerCounter } from "../common/header.utils/counter"
+
 class CartPageComponent extends WFMComponent {
   constructor(config){
       super(config)
@@ -165,7 +166,7 @@ class CartPageComponent extends WFMComponent {
         let localArr = JSON.parse( localStorage.productsLocal)
         localArr.products.push(currentItem);
         localStorage.productsLocal = JSON.stringify(localArr);
-        
+        headerCounter();
         ////////////////Обновляем цену и счетчикпродуктов в корзине//////////////
         const countItem = document.querySelector(`.count-item-${currentId}__cart`);
         const priceItem = document.querySelector(`.price-item-${currentId}__cart`);
@@ -193,6 +194,7 @@ class CartPageComponent extends WFMComponent {
         let localArr = JSON.parse( localStorage.productsLocal)
         localArr.products.splice(indexItem, 1);
         localStorage.productsLocal = JSON.stringify(localArr);
+        headerCounter();
         //обновляем DOM
         const countItem = document.querySelector(`.count-item-${currentId}__cart`);
         const priceItem = document.querySelector(`.price-item-${currentId}__cart`);

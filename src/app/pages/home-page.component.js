@@ -3,6 +3,7 @@ import { productsList } from "../lists/products"
 import { extremum } from "./home-page.utils/extremum"
 import { filterBy } from "./home-page.utils/filters"
 import { updatePage } from "./home-page.utils/utils"
+import { headerCounter } from "../common/header.utils/counter"
 
 class HomePageComponent extends WFMComponent {
   constructor(config){
@@ -32,6 +33,7 @@ class HomePageComponent extends WFMComponent {
   }
 
   makeProducts(){
+      headerCounter();
       let productsContainer = document.querySelector('.products__main');
       productsContainer.innerHTML = '';
       let url = new URL(window.location)
@@ -285,13 +287,13 @@ class HomePageComponent extends WFMComponent {
     addProductToLocal(event){
       const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
       const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
-      console.log(drop)
       let currentId = event.target.dataset.id;
       let currentItem = productsList.products.find(elem => elem.id == currentId);
       let localArr = JSON.parse( localStorage.productsLocal)
       localArr.products.push(currentItem);
       localStorage.productsLocal = JSON.stringify(localArr);
       add.style.color = "red"
+      headerCounter();
       setTimeout(() => {
         add.style.color = "black"
         add.classList.remove('display-block')
@@ -317,6 +319,7 @@ class HomePageComponent extends WFMComponent {
       localArr.products.splice(indexItem, count);
       localStorage.productsLocal = JSON.stringify(localArr);
       drop.style.color = "red"
+      headerCounter();
       setTimeout(() => {
         drop.style.color = "black"
         drop.classList.remove('display-block')
