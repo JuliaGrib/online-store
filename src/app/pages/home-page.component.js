@@ -129,17 +129,26 @@ class HomePageComponent extends WFMComponent {
   updateCount() {
     const checkboxes = document.querySelectorAll('input[type=checkbox]')
     checkboxes.forEach((item) => {
-      let count = 0
+      let countVisible = 0;
+      let countProducts = 0
       this.visibleProducts.forEach((elem) => {
         if(elem.brand === item.nextElementSibling.dataset.id || 
-            elem.category === item.nextElementSibling.dataset.id) {
-          count++
+        elem.category === item.nextElementSibling.dataset.id) {
+          countVisible++
         }
       })
-      item.nextElementSibling.innerHTML = `(${count})`
-      if(count === 0) {
+      productsList.products.forEach((elem) => {
+        if(elem.brand === item.nextElementSibling.dataset.id || 
+        elem.category === item.nextElementSibling.dataset.id) {
+          countProducts++
+        }
+      })
+      item.nextElementSibling.innerHTML = `(${countVisible}/${countProducts})`
+      if(countVisible === 0) {
+        item.parentNode.style.color ="gray";
         item.nextElementSibling.style.color ="gray";
       } else {
+        item.parentNode.style.color ="black";
         item.nextElementSibling.style.color ="black";
       }
     })
