@@ -1,4 +1,6 @@
-export let productsList = {
+import { IProductList } from "../../types/index"
+
+export const productsList: IProductList = {
     "products" : [
         {
             "id" : 1,

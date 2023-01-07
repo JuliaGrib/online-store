@@ -32,6 +32,7 @@ class HomePageComponent extends WFMComponent {
     }
   }
 
+
   makeProducts(){
       headerCounter();
       let productsContainer = document.querySelector('.products__main');
