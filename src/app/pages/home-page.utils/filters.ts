@@ -6,10 +6,10 @@ export const filterBy = function(selector: string, event: FilterChangeInterface)
   const target: HTMLInputElement = event.target;
   const params: URLSearchParams = new URLSearchParams(document.location.search);
   let key: string | null = params.get(selector)
-  if(!key) throw new Error(`${key} is not defined`)
   if(params.get(selector)) {
     if(!target.checked) {
-      const t: string[] = key.split('↕');
+      // eslint-disable-next-line
+      const t: string[] = key!.split('↕');
       const i: number = t.indexOf(target.value);
       t.splice(i, 1)
       key = t.join('↕')
