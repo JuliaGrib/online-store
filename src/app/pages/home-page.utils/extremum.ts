@@ -3,7 +3,7 @@ import { homePageComponent } from "../home-page.component"
 export const extremum = {
 
   minPrice() {
-    let priceArray = []
+    const priceArray: number[] = []
     for(let i = 0; i < homePageComponent.visibleProducts.length; i++ ) {
       priceArray.push(homePageComponent.visibleProducts[i].price)
     }
@@ -11,7 +11,7 @@ export const extremum = {
   },
   
   maxPrice() {
-    let priceArray = []
+    const priceArray: number[] = []
     for(let i = 0; i < homePageComponent.visibleProducts.length; i++ ) {
       priceArray.push(homePageComponent.visibleProducts[i].price)
     }
@@ -19,7 +19,7 @@ export const extremum = {
   },
   
   minStock() {
-    let priceArray = []
+    const priceArray: number[] = []
     for(let i = 0; i <homePageComponent.visibleProducts.length; i++ ) {
       priceArray.push(homePageComponent.visibleProducts[i].stock)
     }
@@ -27,7 +27,7 @@ export const extremum = {
   },
   
   maxStock() {
-    let priceArray = []
+    const priceArray: number[] = []
     for(let i = 0; i < homePageComponent.visibleProducts.length; i++ ) {
       priceArray.push(homePageComponent.visibleProducts[i].stock)
     }
