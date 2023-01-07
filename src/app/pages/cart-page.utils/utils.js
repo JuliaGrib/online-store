@@ -15,3 +15,4 @@ export const setTempArrayProducts = function() {
     return o;
   }, []); 
 }
+
