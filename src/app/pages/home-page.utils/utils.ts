@@ -10,15 +10,15 @@ import { updateSort } from "./sort"
 export const updatePage = function() {
   homePageComponent.visibleProducts = productsList.products;
 
-  let params = new URLSearchParams(document.location.search);
+  const params: URLSearchParams = new URLSearchParams(document.location.search);
 
-  let search = params.get("search");
-  let sort = params.get("sort");
-  let price = params.get("price");
-  let stock = params.get("stock");
-  let category = params.get("category");
-  let brand = params.get("brand")
-  let view = params.get("view")
+  const search: string | null = params.get("search");
+  const sort: string | null = params.get("sort");
+  const price: string | null = params.get("price");
+  const stock: string | null = params.get("stock");
+  const category: string | null = params.get("category");
+  const brand: string | null = params.get("brand")
+  const view: string | null = params.get("view")
 
   if(search == '') homePageComponent.clearQuery("search")
   if(category == '') homePageComponent.clearQuery("category")
