@@ -1,12 +1,13 @@
 import { WFMComponent } from '../../framework/index'
+import { IConfigComponent } from '../../types/index'
 
 class AppHeader extends WFMComponent {
-    constructor(config){
+    constructor(config: IConfigComponent){
         super(config)
     }
 }
 
-export const appHeader = new AppHeader(
+export const appHeader: AppHeader = new AppHeader(
     {
         selector: 'app-header',
         template: /*html*/`

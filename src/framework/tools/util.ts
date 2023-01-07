@@ -1,10 +1,7 @@
-//здесь хранятся функции инструменты для работы модуля
 const wfm = {
-    //проверяет роутинг, есть ли адрес в массиве роутингов
-    //используется в модуле и если адрес некорректный, то переключение на 404
-    isUdefined(d: Storage) {
-        return typeof d === 'undefined'
+    isUdefined(d: object) {
+        return typeof d === 'undefined';
     }
 }
 
-export { wfm }
+export { wfm };
