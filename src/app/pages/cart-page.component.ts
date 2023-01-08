@@ -69,11 +69,11 @@ class CartPageComponent extends WFMComponent {
     }, []); 
 
     const params = new URLSearchParams(document.location.search);
-    
+
     if(params.get('buy')) {
       buyNow();
+      headerCounter();
     }
-
     const countProductsCart = (document.querySelector('.count-items__cart')) as HTMLElement
     const totalProductsCart = (document.querySelector('.total-products__cart')) as HTMLElement
     const totalPriceCart = (document.querySelector('.total-price__cart')) as HTMLElement
