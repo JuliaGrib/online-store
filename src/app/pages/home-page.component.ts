@@ -376,23 +376,23 @@ export const homePageComponent = new HomePageComponent({
                     <p class="filter__title">Categories</p>
                     <ul class="checkbox-category__main">
                         <li>
-                          <input class="category"  type="checkbox" name="sofa" value="sofa">
-                          Sofa
+                          <label for="sofa">Sofa</label>
+                          <input class="category"  id="sofa" type="checkbox" name="sofa" value="sofa">
                           <div class="count__category" data-id="Sofa">(5)</div>
                         </li>
                         <li>
-                          <input class="category" type="checkbox" name="armchair" value="armchair">
-                          Armchair
+                          <label for="armchair">Armchair</label>
+                          <input class="category" id="armchair" type="checkbox" name="armchair" value="armchair">
                           <div class="count__category" data-id="Armchair">(5)</div>
                         </li>
                         <li>
-                          <input class="category" type="checkbox" name="table" value="table">
-                          Table
+                          <label for="armchair">Table</label>
+                          <input class="category" id="table" type="checkbox" name="table" value="table">
                           <div class="count__category" data-id="Table">(5)</div>
                         </li>
                         <li>
-                          <input class="category" type="checkbox" name="chair" value="chair">
-                          Сhair
+                          <label for="armchair">Chair</label>
+                          <input class="category" if="chair" type="checkbox" name="chair" value="chair">
                           <div class="count__category" data-id="Chair">(5)</div>
                         </li>
                     </ul>
@@ -401,23 +401,23 @@ export const homePageComponent = new HomePageComponent({
                     <p class="filter__title">Brand</p>
                     <ul>
                         <li>
-                          <input class="brand" type="checkbox" name="viena" value="viena">
-                          Viena
+                          <label for="viena">Viena</label>
+                          <input class="brand" id="viena" type="checkbox" name="viena" value="viena">
                           <div class="count__brand" data-id="Viena">(5)</div>
                           </li>
                         <li>
-                          <input class="brand" type="checkbox" name="numo" value="numo">
-                          Numo
+                          <label for="numo">Numo</label>
+                          <input class="brand" id="numo" type="checkbox" name="numo" value="numo">
                           <div class="count__brand" data-id="Numo">(5)</div>
                         </li>
                         <li>
-                          <input class="brand" type="checkbox" name="dins" value="dins">
-                          Dins
+                          <label for="dins">Dins</label>
+                          <input class="brand" id="dins" type="checkbox" name="dins" value="dins">
                           <div class="count__brand" data-id="Dins">(5)</div>
                         </li>
                         <li>
-                          <input class="brand" type="checkbox" name="abby" value="abby">
-                          Abby
+                          <label for="abby">Abby</label>
+                          <input class="brand" id="abby" type="checkbox" name="abby" value="abby">
                           <div class="count__brand" data-id="Abby">(5)</div>
                           </li>
                     </ul>

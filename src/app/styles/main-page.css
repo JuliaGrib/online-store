@@ -95,8 +95,19 @@
 }
 
 .category, .brand {
-  margin: 0 10px 0 0;
+  position: absolute;
+  cursor: pointer;
 }
+
+label {
+  padding: 0 10%;
+  cursor: pointer;
+}
+
+label:hover {
+  color: red
+}
+
 
 .main__content {
   width: 70vw;
