@@ -38,11 +38,11 @@ class AboutPageComponent extends WFMComponent {
     const add = (document.querySelector('.add__product')) as HTMLButtonElement
     const drop = (document.querySelector('.drop__product')) as HTMLButtonElement
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
-    navigation.innerHTML = `STORE >>>${product!.category.toUpperCase()} >>>${product!.brand.toUpperCase()} >>> ${product!.title}`
+    navigation.innerHTML = `STORE / ${product!.category.toUpperCase()} / ${product!.brand.toUpperCase()} /  ${product!.title}`
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
     title.innerHTML = product!.title;
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
-    img.src = product!.thumbnail;
+    img.src = product!.images[0];
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
     description.innerHTML = product!.description;
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
@@ -136,26 +136,38 @@ class AboutPageComponent extends WFMComponent {
 export const aboutPageComponent = new AboutPageComponent({
     selector: 'app-about-page',
     template: /*html*/`
-      <div class="container__about">
-        <div class="navigation__about">STORE>>LAPTOPS>>APPLE>>MACBOOK PRO</div>
-        <div class="product__about">
-          <div class="title__product">Title</div>
-          <div class="data__product">
-            <img class="img__product" alt="img" />
-            <div class="info__product">
-              <div class="description__product">description</div>
-              <div class="stock__product">stock</div>
-              <div class="brand__product">brand</div>
-              <div class="category__product">category</div>
-            </div>
-            <div class="add-to-cart__product">
-              <div class="price__product">price</div>
-              <button class="add__product display-block">add to cart</button>
-              <button class="drop__product display-none">drop from cart</button>
-              <button class="buy-now__product">buy now</button>
+      <div class="wrapper__main">
+          
+          <div class="container__about">
+          <div class="navigation__about">STORE / LAPTOPS / APPLE / MACBOOK PRO</div>
+          <div class="product__about">
+            
+            <div class="data__product">
+              <img class="img__product" alt="img" />
+              <div class="info__product">
+              <div class="title__product">Title</div>
+       
+                
+                
+                <div class="brand__product">brand</div>
+                <div class="category__product">category</div>
+                <div class="description__product">description</div>
+                <div class="add-to-cart__product">
+                <div class="price__product">price</div>
+                <div class="stock__product">stock</div>
+                
+                <div class="product__btn">
+                  <button class="add__product display-block">add to cart</button>
+                  <button class="drop__product display-none">drop from cart</button>
+                  <button class="buy-now__product">buy now</button>
+                </div>
+              </div>
+              </div>
+              
             </div>
           </div>
         </div>
+      
       </div>
     `
 })
