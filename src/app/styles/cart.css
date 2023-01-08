@@ -224,13 +224,14 @@
 }
 
 .modal__cart {
+  padding: 30px 45px;
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   align-items: flex-end;
-  padding: 1%;
-  border: 1px solid black;
-  border-radius: 0.5rem;
-  max-width: 500px;
+  /* padding: 1%; */
+  /* border: 1px solid black; */
+  /* border-radius: 0.5rem; */
+  /* max-width: 500px; */
   background-color: #e8f2e7;
   z-index: 99;
   position: absolute;
@@ -238,6 +239,9 @@
 
 .close-modal__cart {
   width: max-content;
+}
+.close-modal__cart:hover {
+  cursor: pointer;
 }
 
 .form__cart {
@@ -259,7 +263,7 @@
 }
 
 .input-cart {
-  background-color: #e8f2e7;
+  /* background-color: #e8f2e7;
   width: 100%;
   border: 1px solid #3b3d40;
   color: #3b3d40;
@@ -268,7 +272,14 @@
   outline: none;
   font-size: 90%;
   text-align: center;
-  margin: 2% auto;
+  margin: 2% auto; */
+
+  outline: none;
+  width: 315px;
+  margin: 0 auto;
+  font-size: 14px;
+  padding: 5px;
+  margin: 10px 0;
 }
 
 .card-details__cart {
@@ -277,19 +288,24 @@
 }
 
 .title-card__cart {
-  margin-bottom: 2%;
   text-align: center;
-  margin: 0 auto;
-  font-size: 90%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #3b3d40;
+  padding: 10px 0 10px 0;
+  font-weight: 600;
 }
 
 .data-card__cart {
-  border: 1px solid orange;
+  border: 1px solid #00000042;
   margin: 0 auto;
-  border-radius: 0.5rem;
-  background-color: white;
-  width: 320px;
+  border-radius: 0.3rem;
+  /* background-color: white; */
+  width: 285px;
   height: 150px;
+  background: -webkit-linear-gradient(0deg, rgb(217, 217, 217) 14%, rgb(165, 178, 244));
+  background: -moz-linear-gradient(0deg, rgb(217, 217, 217) 14%, rgb(165, 178, 244));
+  background: linear-gradient(0deg, rgb(217, 217, 217) 14%, rgb(165, 178, 244));
 }
 
 .number-card__cart {
@@ -330,15 +346,15 @@
 
 .number-card-input__cart {
   width: 80%;
-  background: rgb(233,233,202);
-  border: 1px solid orange;
+  /* background: rgb(233,233,202); */
+  border: 1px solid #1c1a1500;
   border-radius: 0.3rem;
   outline: none;
   text-align: center;
   margin-left: 2%;
-  font-size: 90%;
+  font-size: 12px;
   color: #3b3d40;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .valid-data-input__cart {
@@ -346,15 +362,15 @@
   font-size: 130%;
   width: 60%;
   height: 1rem;
-  background: rgb(233,233,202);
-  border: 1px solid orange;
+  /* background: rgb(233,233,202); */
+  border: 1px solid #1c191200;
   border-radius: 0.3rem;
   outline: none;
   text-align: center;
   margin-left: 2%;
   font-size: 90%;
   color: #3b3d40;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .cvv-card-input__cart {
@@ -362,19 +378,19 @@
   font-size: 130%;
   width: 60%;
   height: 1rem;
-  background: rgb(233,233,202);
-  border: 1px solid orange;
+  /* background: rgb(233,233,202); */
+  border: 1px solid #1c191200;
   border-radius: 0.3rem;
   outline: none;
   text-align: center;
   margin-left: 2%;
   font-size: 90%;
   color: #3b3d40;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .confirm-btn {
-  width: 40%;
+  /* width: 40%;
   font-size: 90%;
   background-color: #3f1010;
   border: 1px solid orange;
@@ -382,7 +398,25 @@
   padding: 1%;
   cursor: pointer;
   display: block;
-  margin: 5% auto;
+  margin: 5% auto; */
+
+
+  display: block;
+  width: 285px;
+  border: 0;
+    background-color: white;
+    padding: 7px 0;
+    outline: none;
+    border: 1px solid #787878;
+    transition: 0.2s;
+    margin: 30px auto 0;
+}
+
+.confirm-btn:hover {
+  cursor: pointer;
+  background-color: #DA4358;
+  border: 1px solid #DA4358;
+  color: white;
 }
 
 .border-color-green {
@@ -437,4 +471,13 @@
   color: #e8f2e7;
   top: 42%;
   left: -7%;
+}
+
+
+.title-personal__cart {
+  font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    color: #3b3d40;
+    padding: 0 0 10px 0;
+    font-weight: 600;
 }
