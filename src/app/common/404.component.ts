@@ -1,12 +1,13 @@
 import { WFMComponent } from '../../framework/index'
+import { IConfigComponent } from '../../types/index'
 
 class NotFound extends WFMComponent {
-    constructor(config) {
+    constructor(config: IConfigComponent) {
         super(config)
     }
 }
 
-export const notFound = new NotFound({
+export const notFound: NotFound = new NotFound({
     selector: 'app-not-found',
     template: `
     <div class="container__404">

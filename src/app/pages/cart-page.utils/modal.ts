@@ -1,31 +1,31 @@
 export const buyNow = function() {
-  const container = document.querySelector('.container__cart')
-  const buyNow = document.createElement('div');
-  const modal = document.createElement('div');
-  const close = document.createElement('button');
-  const form = document.createElement('form');
+  const container = (document.querySelector('.container__cart')) as HTMLElement
+  const buyNow = document.createElement('div')
+  const modal = document.createElement('div')
+  const close = document.createElement('button')
+  const form = document.createElement('form')
   const personalDetails = document.createElement('div')
-  const cardDetails = document.createElement('div');
-  const confirm = document.createElement('button');
-  const title = document.createElement('h2');
-  const personName = document.createElement('div');
-  const phoneNumber = document.createElement('div');
-  const address = document.createElement('div');
-  const email = document.createElement('div');
-  const personNameInput = document.createElement('input');
-  const phoneNumberInput = document.createElement('input');
-  const addressInput = document.createElement('input');
-  const emailInput = document.createElement('input');
-  const titleCard = document.createElement('h2');
-  const dataCard = document.createElement('div');
-  const numberCard = document.createElement('div');
+  const cardDetails = document.createElement('div')
+  const confirm = document.createElement('button')
+  const title = document.createElement('h2')
+  const personName = document.createElement('div')
+  const phoneNumber = document.createElement('div')
+  const address = document.createElement('div')
+  const email = document.createElement('div')
+  const personNameInput = (document.createElement('input')) as HTMLInputElement
+  const phoneNumberInput = (document.createElement('input')) as HTMLInputElement
+  const addressInput = (document.createElement('input')) as HTMLInputElement
+  const emailInput = (document.createElement('input')) as HTMLInputElement
+  const titleCard = document.createElement('h2')
+  const dataCard = document.createElement('div')
+  const numberCard = document.createElement('div')
   const imgCard = document.createElement('img')
-  const numberCardInput = document.createElement('input')
+  const numberCardInput = (document.createElement('input')) as HTMLInputElement
   const otherDataCard = document.createElement('div')
   const validDataCard = document.createElement('div');
-  const validDataCardInput = document.createElement('input');
+  const validDataCardInput = (document.createElement('input')) as HTMLInputElement
   const cvvDataCard = document.createElement('div');
-  const cvvDataCardInput = document.createElement('input');
+  const cvvDataCardInput = (document.createElement('input')) as HTMLInputElement
 
   buyNow.classList.add('buy-now__cart');
   modal.classList.add('modal__cart');
@@ -82,8 +82,8 @@ export const buyNow = function() {
 
   emailInput.type = "email"
   numberCardInput.type = "text"
-  cvvDataCardInput.maxLength = "3"
-  validDataCardInput.maxLength = "5"
+  cvvDataCardInput.maxLength = 3
+  validDataCardInput.maxLength = 5
 
   container.appendChild(buyNow);
   buyNow.appendChild(modal);
@@ -122,7 +122,7 @@ export const buyNow = function() {
   personNameInput.addEventListener('input', function() {
     const NAME_REGEXP = /([а-яА-яa-zA-z]{3})+\s+([а-яА-яa-zA-z]{3})/ig
     if(this.value.length > 20) {
-      let arr = this.value.split('')
+      const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
@@ -136,9 +136,10 @@ export const buyNow = function() {
   })
 
   phoneNumberInput.addEventListener('input', function() {
+    // eslint-disable-next-line
     const PHONE_REGEX = /^([+][0-9\s-\(\)]{9,16})*$/i;
     if(this.value.length > 16 || /^[а-яА-яa-zA-z]$/.test(this.value.slice(-1))) {
-      let arr = this.value.split('')
+      const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
@@ -163,6 +164,7 @@ export const buyNow = function() {
   })
 
   emailInput.addEventListener('input', function() {
+    // eslint-disable-next-line
     const EMAIL_REGEXP = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     if(EMAIL_REGEXP.test(this.value)) {
       emailInput.classList.remove('border-color-red')
@@ -173,25 +175,24 @@ export const buyNow = function() {
     }
   })
 
-  numberCardInput.addEventListener('keydown', function(e) {
-    let value = this.value.replace(/\s+/g, '');
-    let isBackspace = e.key === 'Backspace'; 
+  numberCardInput.addEventListener('keydown', function(e: KeyboardEvent) {
+    const value: string = this.value.replace(/\s+/g, '');
+    const isBackspace: boolean = e.key === 'Backspace'; 
     if ((e.key.length === 1 && /^[^\d\s]+$/.test(e.key)) || (!isBackspace && value.length === 16)) {
         e.preventDefault();
         return false;
     }
     this.value = value.split('').reverse().join('').replace(/\B(?=(\d{4})+(?!\d))/g, " ").split('').reverse().join('').trim();
     if(/^[^\d]$/.test(this.value.slice(-1))) {
-      console.log(this.value)
-      let arr = this.value.split('')
+      const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
-    if(this.value.slice(0,1) == 4) {
+    if(this.value.slice(0,1) == '4') {
       imgCard.src = "./assets/cards/visa.png"
-    } else if(this.value.slice(0,1) == 5) {
+    } else if(this.value.slice(0,1) == '5') {
       imgCard.src = "./assets/cards/mastercard.png"
-    } else if(this.value.slice(0,1) == 3) {
+    } else if(this.value.slice(0,1) == '3') {
       imgCard.src = "./assets/cards/american.png"
     }  else {
       imgCard.src = "./assets/cards/card.png"
@@ -208,7 +209,7 @@ export const buyNow = function() {
   cvvDataCardInput.addEventListener('input', function() {
     const CVV_REGEXP = /^[0-9]{3,3}$/;
     if(/^[^\d]$/.test(this.value.slice(-1))) {
-      let arr = this.value.split('')
+      const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
@@ -221,21 +222,21 @@ export const buyNow = function() {
     }
   })
 
-  validDataCardInput.addEventListener('keydown', function(e) {
-    let value = this.value.replace(/\s+/g, '');
-    let isBackspace = e.key === 'Backspace'; 
+  validDataCardInput.addEventListener('keydown', function(e: KeyboardEvent) {
+    const value: string = this.value.replace(/\s+/g, '');
+    const isBackspace: boolean = e.key === 'Backspace'; 
     if ((e.key.length === 1 && /^[^\d\s]+$/.test(e.key)) || (!isBackspace && value.length === 16)) {
         e.preventDefault();
         return false;
     }
     this.value = value.split('').reverse().join('').replace(/\B(?=(\d{2})+(?!\d))/g, "/").split('').reverse().join('').trim();
     if(/^[^\d]$/.test(this.value.slice(-1))) {
-      let arr = this.value.split('')
+      const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
-    if(this.value[0] != 1) {
-      let arr = this.value.split('')
+    if(this.value[0] != '1') {
+      const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
@@ -248,9 +249,9 @@ export const buyNow = function() {
     }
   })
 
-  confirm.addEventListener('click', function(event) {
+  confirm.addEventListener('click', function(event: MouseEvent) {
     event.preventDefault;
-    let succesArray = document.querySelectorAll('.border-color-green')
+    const succesArray: NodeListOf<Element> = document.querySelectorAll('.border-color-green')
     if(succesArray.length == 7) {
       modal.innerHTML = 'Ваш заказ оформлен. Вы будете перенаправлены на главную страницу'
       setTimeout(function() {
@@ -261,9 +262,9 @@ export const buyNow = function() {
   })
 
   close.addEventListener('click', function() {
-    let url = new URL(window.location)
+    const url: URL = new URL(window.location.href)
     url.searchParams.delete('buy')
-    history.pushState(null, null, url);
+    history.pushState(null, "", url);
     buyNow.remove();
   })
 

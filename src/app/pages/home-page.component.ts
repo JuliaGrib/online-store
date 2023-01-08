@@ -4,13 +4,14 @@ import { extremum } from "./home-page.utils/extremum"
 import { filterBy } from "./home-page.utils/filters"
 import { updatePage } from "./home-page.utils/utils"
 import { headerCounter } from "../common/header.utils/counter"
+import { IConfigComponent, IProduct } from "../../types/index"
 
 class HomePageComponent extends WFMComponent {
-  constructor(config){
+  constructor(config: IConfigComponent){
     super(config)
   }
 
-  visibleProducts = productsList.products;
+  visibleProducts: IProduct[] = productsList.products;
 
   actions() {
       return {
@@ -34,22 +35,22 @@ class HomePageComponent extends WFMComponent {
 
   makeProducts(){
       headerCounter();
-      let productsContainer = document.querySelector('.products__main');
+      const productsContainer = (document.querySelector('.products__main')) as HTMLElement
       productsContainer.innerHTML = '';
-      let url = new URL(window.location)
+      const url = new URL(window.location.href)
       if(url.search) 
         updatePage();
       this.updateCount();
       this.visibleProducts.forEach((elem) => {   
-        let productElem = document.createElement('div');
-        let linkItem = document.createElement('a');
-        let productImg = document.createElement('img');
-        let titleItem = document.createElement('p');
-        let priceContainer = document.createElement('div');
-        let priceItem = document.createElement('p');
-        let addItemBtn = document.createElement('a');
-        let dropItemBtn = document.createElement('a');
-        let stockItem = document.createElement('div');
+        const productElem = document.createElement('div');
+        const linkItem = document.createElement('a');
+        const productImg = document.createElement('img');
+        const titleItem = document.createElement('p');
+        const priceContainer = document.createElement('div');
+        const priceItem = document.createElement('p');
+        const addItemBtn = document.createElement('a');
+        const dropItemBtn = document.createElement('a');
+        const stockItem = document.createElement('div');
         productElem.classList.add('elem__item');
         linkItem.classList.add('link__item');
         priceContainer.classList.add('price__container');
@@ -60,36 +61,36 @@ class HomePageComponent extends WFMComponent {
         dropItemBtn.classList.add('drop__item')
         dropItemBtn.classList.add('display-none')
         addItemBtn.classList.add('display-block')
-        let range1 = document.querySelector('#range-1');
-        let range2 = document.querySelector('#range-2');
-        let stockRange1 = document.querySelector('#stock-range-1');
-        let stockRange2 = document.querySelector('#stock-range-2');
-        let slider1 = document.querySelector('#slider-1');
-        let slider2 = document.querySelector('#slider-2');
-        let stockSlider1 = document.querySelector('#stock-slider-1');
-        let stockSlider2 = document.querySelector('#stock-slider-2');
-        slider1.min = 340
-        slider1.max = 2570
-        slider2.min = 340
-        slider2.max = 2570
-        stockSlider1.min = 5
-        stockSlider1.max = 30
-        stockSlider2.min = 5
-        stockSlider2.max = 30
-        let params = new URLSearchParams(document.location.search);
+        const range1 = (document.querySelector('#range-1')) as HTMLInputElement
+        const range2 = (document.querySelector('#range-2')) as HTMLInputElement
+        const stockRange1 = (document.querySelector('#stock-range-1')) as HTMLInputElement
+        const stockRange2 = (document.querySelector('#stock-range-2')) as HTMLInputElement
+        const slider1 = (document.querySelector('#slider-1')) as HTMLInputElement
+        const slider2 = (document.querySelector('#slider-2')) as HTMLInputElement
+        const stockSlider1 = (document.querySelector('#stock-slider-1')) as HTMLInputElement
+        const stockSlider2 = (document.querySelector('#stock-slider-2')) as HTMLInputElement
+        slider1.min = '340'
+        slider1.max = '2570'
+        slider2.min = '340'
+        slider2.max = '2570'
+        stockSlider1.min = '5'
+        stockSlider1.max = '30'
+        stockSlider2.min = '5'
+        stockSlider2.max = '30'
+        const params: URLSearchParams = new URLSearchParams(document.location.search);
         if(!params.get('price') && !params.get('stock')) {
-          slider1.value = extremum.minPrice();
-          slider2.value = extremum.maxPrice();
-          stockSlider1.value = extremum.minStock();
-          stockSlider2.value = extremum.maxStock();
+          slider1.value = `${extremum.minPrice()}`
+          slider2.value = `${extremum.maxPrice()}`
+          stockSlider1.value = `${extremum.minStock()}`
+          stockSlider2.value = `${extremum.maxStock()}`
         }
         if(params.get('price') && !params.get('stock')) {
-          stockSlider1.value = extremum.minStock();
-          stockSlider2.value = extremum.maxStock();
+          stockSlider1.value = `${extremum.minStock()}`
+          stockSlider2.value = `${extremum.maxStock()}`
         }
         if(!params.get('price') && params.get('stock')) {
-          slider1.value = extremum.minPrice();
-          slider2.value = extremum.maxPrice();
+          slider1.value = `${extremum.minPrice()}`
+          slider2.value = `${extremum.maxPrice()}`
         }
         range1.innerHTML = slider1.value
         range2.innerHTML = slider2.value
@@ -113,8 +114,8 @@ class HomePageComponent extends WFMComponent {
         priceContainer.appendChild(priceItem);
         priceContainer.appendChild(addItemBtn);
         priceContainer.appendChild(dropItemBtn);
-        let localArr = JSON.parse(localStorage.productsLocal)
-        if(localArr.products.find(item => item.id == elem.id)) {
+        const localArr = JSON.parse(localStorage.productsLocal)
+        if(localArr.products.find((item: { id: number }) => item.id == elem.id)) {
           addItemBtn.classList.remove('display-block')
           addItemBtn.classList.add('display-none')
           dropItemBtn.classList.remove('display-none')
@@ -124,46 +125,56 @@ class HomePageComponent extends WFMComponent {
       if(this.visibleProducts.length === 0) {
         productsContainer.innerHTML = 'No products found';
       }
-      const total = document.querySelector('.main__total')
+      const total = (document.querySelector('.main__total')) as HTMLHtmlElement
       total.innerHTML = `Found: ${this.visibleProducts.length}` 
   }
 
   updateCount() {
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    const checkboxes = (document.querySelectorAll('input[type=checkbox]')) as NodeListOf<HTMLInputElement>
     checkboxes.forEach((item) => {
       let countVisible = 0;
       let countProducts = 0
       this.visibleProducts.forEach((elem) => {
-        if(elem.brand === item.nextElementSibling.dataset.id || 
-        elem.category === item.nextElementSibling.dataset.id) {
+        // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+        const nextSubling: HTMLElement = <HTMLElement>item.nextElementSibling!
+        if(elem.brand === nextSubling.dataset.id || 
+        elem.category === nextSubling.dataset.id) {
           countVisible++
         }
       })
       productsList.products.forEach((elem) => {
-        if(elem.brand === item.nextElementSibling.dataset.id || 
-        elem.category === item.nextElementSibling.dataset.id) {
+        // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+        const nextSubling: HTMLElement = <HTMLElement>item.nextElementSibling!
+        if(elem.brand === nextSubling.dataset.id || 
+        elem.category === nextSubling.dataset.id) {
           countProducts++
         }
       })
-      item.nextElementSibling.innerHTML = `(${countVisible}/${countProducts})`
+      // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+      item.nextElementSibling!.innerHTML = `(${countVisible}/${countProducts})`
+      // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+      const nextSubling: HTMLElement = <HTMLElement>item.nextElementSibling!
+      // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+      const parenNode: HTMLElement = <HTMLElement>item.parentNode!
       if(countVisible === 0) {
-        item.parentNode.style.color ="gray";
-        item.nextElementSibling.style.color ="gray";
+        parenNode.style.color ="gray";
+        nextSubling.style.color ="gray";
       } else {
-        item.parentNode.style.color ="black";
-        item.nextElementSibling.style.color ="black";
+        parenNode.style.color ="black";
+        nextSubling.style.color ="black";
       }
     })
   }
 
-  viewProducts(event) {
-    let key = event.target.dataset.id;
+  viewProducts(event: { target: { dataset: { id: string } } }) {
+    const key = event.target.dataset.id;
     this.makeQuery('view', key)
     this.makeProducts();
   }
-
-  filterProducts(event) {
-    let target = event.target;
+  // eslint-disable-next-line 
+  filterProducts(event: any) {
+    const target = event.target;
+    if(!target) throw new Error('is not defined')
     if (target.tagName === 'INPUT' && target.type === 'checkbox') {
       if(target.classList  == 'category') 
         filterBy('category', event)
@@ -173,8 +184,8 @@ class HomePageComponent extends WFMComponent {
   }
 
   copyLink() {
-    const copyField = document.querySelector('.copy-field')
-    const copyLink = document.querySelector('.copy-link')
+    const copyField = (document.querySelector('.copy-field')) as HTMLInputElement
+    const copyLink = (document.querySelector('.copy-link')) as HTMLButtonElement
     copyLink.innerHTML = "Copied!"
     copyLink.style.color = "orange"
     setTimeout(() => {
@@ -189,21 +200,21 @@ class HomePageComponent extends WFMComponent {
   }
 
   resetFilters() {
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
-    const input = document.querySelector('.input-main__search')
-    const slider1 = document.querySelector('#slider-1');
-    const slider2 = document.querySelector('#slider-2');
-    const stockSlider1 = document.querySelector('#stock-slider-1');
-    const stockSlider2 = document.querySelector('#stock-slider-2');
+    const checkboxes = (document.querySelectorAll('input[type=checkbox]')) as NodeListOf<HTMLInputElement>
+    const input = (document.querySelector('.input-main__search')) as HTMLInputElement
+    const slider1 = (document.querySelector('#slider-1')) as HTMLInputElement
+    const slider2 = (document.querySelector('#slider-2')) as HTMLInputElement
+    const stockSlider1 = (document.querySelector('#stock-slider-1')) as HTMLInputElement
+    const stockSlider2 = (document.querySelector('#stock-slider-2')) as HTMLInputElement
 
-    let url = new URL(window.location)
+    const url: URL = new URL(window.location.href)
     url.searchParams.delete('category')
     url.searchParams.delete('brand')
     url.searchParams.delete('price')
     url.searchParams.delete('stock')
     url.searchParams.delete('search')
     url.searchParams.delete('sort')
-    history.pushState(null, null, url);
+    history.pushState(null, '', url);
 
     checkboxes.forEach(elem => elem.checked = false)
     input.value = ''
@@ -215,57 +226,57 @@ class HomePageComponent extends WFMComponent {
     this.makeProducts();  
   }
 
-  makeQuery(key, value) {
-    let url = new URL(window.location)
+  makeQuery(key: string, value: string) {
+    const url: URL = new URL(window.location.href)
     url.searchParams.set(key, value)
-    history.pushState(null, null, url);
+    history.pushState(null, '', url);
   }
 
-  clearQuery(key) {
-    let url = new URL(window.location)
+  clearQuery(key: string) {
+    const url = new URL(window.location.href)
     url.searchParams.delete(key)
-    history.pushState(null, null, url);
+    history.pushState(null, '', url);
     if(!url.search) {
       this.visibleProducts = productsList.products;
     }
   }
 
-  multiSlider(event) {
+  multiSlider(event: { target: { id: string } }) {
     const minGapPrice = 160;
     const minGapStock = 1;
-    const slider1 = document.querySelector('#slider-1')
-    const slider2 = document.querySelector('#slider-2')
-    const stockSlider1 = document.querySelector('#stock-slider-1')
-    const stockSlider2 = document.querySelector('#stock-slider-2')
+    const slider1 = (document.querySelector('#slider-1')) as HTMLInputElement
+    const slider2 = (document.querySelector('#slider-2')) as HTMLInputElement
+    const stockSlider1 = (document.querySelector('#stock-slider-1')) as HTMLInputElement
+    const stockSlider2 = (document.querySelector('#stock-slider-2'))as HTMLInputElement
 
     if(event.target.id === "slider-1") {
       if(parseInt(slider2.value) - parseInt(slider1.value) <= minGapPrice) {
-        slider1.value = parseInt(slider2.value) - minGapPrice;
+        slider1.value = `${parseInt(slider2.value) - minGapPrice}`
       }
       this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
     }
     if(event.target.id === "slider-2") {
       if(parseInt(slider2.value) - parseInt(slider1.value) <= minGapPrice) {
-        slider2.value = parseInt(slider1.value) + minGapPrice;
+        slider2.value = `${parseInt(slider1.value) + minGapPrice}`
       }
       this.makeQuery('price', `${slider1.value}↕${slider2.value}`)
     }
     if(event.target.id === "stock-slider-1") {
       if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGapStock) {
-        stockSlider1.value = parseInt(stockSlider2.value) - minGapStock;
+        stockSlider1.value = `${parseInt(stockSlider2.value) - minGapStock}`
       }
       this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
     }
     if(event.target.id === "stock-slider-2") {
       if(parseInt(stockSlider2.value) - parseInt(stockSlider1.value) <= minGapStock) {
-        stockSlider2.value = parseInt(stockSlider1.value) + minGapStock;
+        stockSlider2.value = `${parseInt(stockSlider1.value) + minGapStock}`
       }
       this.makeQuery('stock', `${stockSlider1.value}↕${stockSlider2.value}`)
     }
     this.makeProducts();
   }
 
-    sortProducts(event) {
+    sortProducts(event: { target: { value: string } }) {
       if(event.target.value === "Sort by price (lowest to highest)") {
         this.makeQuery("sort", "price-ASC")
       } else if(event.target.value === "Sort by price (highest to lowest)") {
@@ -278,18 +289,19 @@ class HomePageComponent extends WFMComponent {
       this.makeProducts();
     }
 
-    searchProduct(event) {
-      let value = event.target.value.toLowerCase();
+    searchProduct(event: { target: { value: string } }) {
+      const value = event.target.value.toLowerCase();
       this.makeQuery("search", value)
       this.makeProducts();
     }
 
-    addProductToLocal(event){
-      const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
-      const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
-      let currentId = event.target.dataset.id;
-      let currentItem = productsList.products.find(elem => elem.id == currentId);
-      let localArr = JSON.parse( localStorage.productsLocal)
+    addProductToLocal(event: { target: { dataset: { id: number } } }){
+      console.log("zadluioasd")
+      const add = (document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
+      const drop = (document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
+      const currentId = event.target.dataset.id;
+      const currentItem = productsList.products.find(elem => elem.id == currentId);
+      const localArr = JSON.parse( localStorage.productsLocal)
       localArr.products.push(currentItem);
       localStorage.productsLocal = JSON.stringify(localArr);
       add.style.color = "red"
@@ -303,15 +315,15 @@ class HomePageComponent extends WFMComponent {
       }, 500)
     }
 
-    removeProductToLocal(event){
-      const add = document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)
-      const drop = document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)
-      let localArr = JSON.parse(localStorage.productsLocal)
-      let currentId = event.target.dataset.id
-      let currentItem = localArr.products.find(elem => elem.id == currentId);
-      let indexItem = localArr.products.indexOf(currentItem)
+    removeProductToLocal(event: { target: { dataset: { id: number } } }){
+      const add = (document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
+      const drop = (document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
+      const localArr = JSON.parse(localStorage.productsLocal)
+      const currentId = event.target.dataset.id
+      const currentItem = localArr.products.find((elem: { id: number }) => elem.id == currentId);
+      const indexItem = localArr.products.indexOf(currentItem)
       let count = 0
-      for(let elem of localArr.products) {
+      for(const elem of localArr.products) {
         if(elem.id == currentId) {
           count++
         }
