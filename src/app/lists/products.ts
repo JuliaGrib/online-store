@@ -14,7 +14,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Viena/Sofa_Viena_Velvet_Terra-1.jpg",
             "../assets/products/sofa/Viena/Sofa_Viena_Velvet_Terra-2.jpg"
             ],
-            "stock" : 10
+            "stock" : 10,
         },
         {
             "id" : 2,
@@ -28,7 +28,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Numo/Sofa_Numo_Mini_Textile_Navy_Blue-1.jpg",
             "../assets/products/sofa/Numo/Sofa_Numo_Mini_Textile_Navy_Blue-2.jpg"
             ],
-            "stock" : 15
+            "stock" : 15,
         },
         {
             "id" : 3,
@@ -42,7 +42,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Svaut/Sofa_Svaut_Velvet_Ocean-1.jpg",
             "../assets/products/sofa/Svaut/Sofa_Svaut_Velvet_Ocean-2.jpg"
             ],
-            "stock" : 23
+            "stock" : 23,
         },
         {
             "id" : 4,
@@ -98,7 +98,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Abby/Sofa_Abby_Happy_Yellow-1.jpg",
             "../assets/products/sofa/Abby/Sofa_Abby_Happy_Yellow-2.jpg"
             ],
-            "stock" : 16
+            "stock" : 16,
         },
         {
             "id" : 8,
@@ -112,7 +112,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
             ],
-            "stock" : 8
+            "stock" : 8,
         },
         {
             "id" : 9,
@@ -126,7 +126,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
             ],
-            "stock" : 8
+            "stock" : 8,
         },
         {
             "id" : 10,
@@ -140,7 +140,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
             ],
-            "stock" : 8
+            "stock" : 8,
         },
         {
             "id" : 11,
@@ -154,7 +154,7 @@ export const productsList: IProductList = {
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg",
             "../assets/products/sofa/Siteno/Sofa_Siteno_Barhat_Mint-1.jpg"
             ],
-            "stock" : 8
+            "stock" : 8,
         }
     ]
 }
