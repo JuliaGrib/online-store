@@ -115,6 +115,10 @@ class HomePageComponent extends WFMComponent {
         priceContainer.appendChild(addItemBtn);
         priceContainer.appendChild(dropItemBtn);
         const localArr = JSON.parse(localStorage.productsLocal)
+
+        addItemBtn.addEventListener('click', this.addProductToLocal)
+        dropItemBtn.addEventListener('click', this.removeProductToLocal)
+
         if(localArr.products.find((item: { id: number }) => item.id == elem.id)) {
           addItemBtn.classList.remove('display-block')
           addItemBtn.classList.add('display-none')
@@ -294,12 +298,12 @@ class HomePageComponent extends WFMComponent {
       this.makeQuery("search", value)
       this.makeProducts();
     }
-
-    addProductToLocal(event: { target: { dataset: { id: number } } }){
-      console.log("zadluioasd")
-      const add = (document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
-      const drop = (document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
-      const currentId = event.target.dataset.id;
+    // eslint-disable-next-line
+    addProductToLocal(event: MouseEvent){
+      const target: HTMLElement = <HTMLElement>event.target
+      const add = (document.querySelector(`.add__item[data-id="${target.dataset.id}"`)) as HTMLButtonElement
+      const drop = (document.querySelector(`.drop__item[data-id="${target.dataset.id}"`)) as HTMLButtonElement
+      const currentId = +target.dataset.id;
       const currentItem = productsList.products.find(elem => elem.id == currentId);
       const localArr = JSON.parse( localStorage.productsLocal)
       localArr.products.push(currentItem);
@@ -315,11 +319,12 @@ class HomePageComponent extends WFMComponent {
       }, 500)
     }
 
-    removeProductToLocal(event: { target: { dataset: { id: number } } }){
-      const add = (document.querySelector(`.add__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
-      const drop = (document.querySelector(`.drop__item[data-id="${event.target.dataset.id}"`)) as HTMLButtonElement
+    removeProductToLocal(event: MouseEvent){
+      const target: HTMLElement = <HTMLElement>event.target
+      const add = (document.querySelector(`.add__item[data-id="${target.dataset.id}"`)) as HTMLButtonElement
+      const drop = (document.querySelector(`.drop__item[data-id="${target.dataset.id}"`)) as HTMLButtonElement
       const localArr = JSON.parse(localStorage.productsLocal)
-      const currentId = event.target.dataset.id
+      const currentId = +target.dataset.id
       const currentItem = localArr.products.find((elem: { id: number }) => elem.id == currentId);
       const indexItem = localArr.products.indexOf(currentItem)
       let count = 0
