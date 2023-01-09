@@ -33,3 +33,33 @@
 .count__header {
   padding-left: 15px;
 }
+
+footer {
+  background-color: #f4f3f1;
+  margin-top: 50px;
+}
+
+.members a, .date {
+  padding: 0 10px 0 0;
+  text-decoration: none;
+  color: #3b3d40;
+  font-weight: 600;
+  transition: 0.5s;
+}
+.members a:hover {
+
+  color: #DA4358;
+
+}
+
+.footer__content {
+  width: 500px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rs img {
+  width: 100px;
+}

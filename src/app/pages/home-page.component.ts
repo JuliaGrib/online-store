@@ -473,6 +473,22 @@ export const homePageComponent = new HomePageComponent({
             </div>
         </div>
       </div>
+      <footer>
+        <div class="wrapper__content">
+          <div class="footer__content">
+              <div class="members">
+              <a href="https://github.com/231globus">231globus</a>
+              <a href="https://github.com/JuliaGrib">JuliaGrib</a>
+              </div>
+              <div class="date">2023</div>
+              <div class="rs">
+                <a href="https://rs.school/">
+                  <img src="../assets/main/rs_school.svg">
+                </a>
+              </div>         
+          </div>      
+        </div>     
+      </footer>
     `
 })
 
