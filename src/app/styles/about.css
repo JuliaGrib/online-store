@@ -30,6 +30,17 @@
   width: 100%;
 }
 
+.galery__product {
+  width: 25%;
+}
+
+.img_one, .img_two {
+  width: 80%;
+  border: 1px solid #DA4358;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
 .img__product {
   /* width: 20%;
   height: 100%;

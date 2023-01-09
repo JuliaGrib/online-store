@@ -19,8 +19,26 @@ class AboutPageComponent extends WFMComponent {
     return {
       'click .add__product': 'addToCart',
       'click .buy-now__product': 'buyNow',
-      'click .drop__product': 'dropFromCart'
+      'click .drop__product': 'dropFromCart',
+      'click .img_one': 'changeImgOne',
+      'click .img_two': 'changeImgTwo',
     }
+  }
+
+  changeImgOne() {
+    const idPage: number = parseURL();
+    const product = productsList.products.find((elem: { id: number; }) => elem.id === idPage);
+    const img = (document.querySelector('.img__product')) as HTMLImageElement
+    // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+    img.src = product!.images[0];
+  }
+
+  changeImgTwo() {
+    const idPage: number = parseURL();
+    const product = productsList.products.find((elem: { id: number; }) => elem.id === idPage);
+    const img = (document.querySelector('.img__product')) as HTMLImageElement
+    // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+    img.src = product!.images[1];
   }
 
   makeAbout() {
@@ -37,6 +55,15 @@ class AboutPageComponent extends WFMComponent {
     const price = (document.querySelector('.price__product')) as HTMLElement
     const add = (document.querySelector('.add__product')) as HTMLButtonElement
     const drop = (document.querySelector('.drop__product')) as HTMLButtonElement
+
+    const img1 = (document.querySelector('.img_one')) as HTMLImageElement
+    const img2 = (document.querySelector('.img_two')) as HTMLImageElement
+
+    // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+    img1.src = product!.images[0];
+        // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+    img2.src = product!.images[1];
+
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
     navigation.innerHTML = `STORE / ${product!.category.toUpperCase()} / ${product!.brand.toUpperCase()} /  ${product!.title}`
     // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
@@ -143,19 +170,19 @@ export const aboutPageComponent = new AboutPageComponent({
           <div class="product__about">
             
             <div class="data__product">
+              <div class="galery__products">
+                <img class="img_one" alt="img" />
+                <img class="img_two" alt="img" />
+              </div>
               <img class="img__product" alt="img" />
               <div class="info__product">
               <div class="title__product">Title</div>
-       
-                
-                
                 <div class="brand__product">brand</div>
                 <div class="category__product">category</div>
                 <div class="description__product">description</div>
                 <div class="add-to-cart__product">
                 <div class="price__product">price</div>
                 <div class="stock__product">stock</div>
-                
                 <div class="product__btn">
                   <button class="add__product display-block">add to cart</button>
                   <button class="drop__product display-none">drop from cart</button>

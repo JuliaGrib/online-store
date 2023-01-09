@@ -16,7 +16,7 @@ export const appHeader: AppHeader = new AppHeader(
             <ul class="menu__header">
             <li class="item__header"><a href="#"><img src="../assets/logo.svg"></a></li>
             <li class="item__header"><span class="total-price__header">Total price:</span></li>
-            <li class="item__header"><a class="cart__header" href="#cart"><img src="../assets/cart.svg"><div class="count__header">(5)</div></a></li>
+            <li class="item__header"><a class="cart__header" href="#cart"><img src="../assets/cart.svg"><div class="count__header">1</div></a></li>
           </ul>
           </div>
         </header>
