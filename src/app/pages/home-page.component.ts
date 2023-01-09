@@ -245,7 +245,7 @@ class HomePageComponent extends WFMComponent {
 
   multiSlider(event: { target: { id: string } }) {
     const minGapPrice = 160;
-    const minGapStock = 1;
+    const minGapStock = 2;
     const slider1 = (document.querySelector('#slider-1')) as HTMLInputElement
     const slider2 = (document.querySelector('#slider-2')) as HTMLInputElement
     const stockSlider1 = (document.querySelector('#stock-slider-1')) as HTMLInputElement
@@ -291,8 +291,9 @@ class HomePageComponent extends WFMComponent {
       this.makeProducts();
     }
 
-    searchProduct(event: { target: { value: string } }) {
-      const value = event.target.value.toLowerCase();
+    searchProduct(event: InputEvent) {
+      const target: HTMLInputElement = <HTMLInputElement>event.target
+      const value = target.value;
       this.makeQuery("search", value)
       this.makeProducts();
     }
