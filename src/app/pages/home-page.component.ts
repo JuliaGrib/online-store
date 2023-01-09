@@ -21,8 +21,6 @@ class HomePageComponent extends WFMComponent {
 
   events() {
     return {
-      'click .add__item': 'addProductToLocal',
-      'click .drop__item': 'removeProductToLocal',
       'input .input-main__search': 'searchProduct',
       'change .main__select-sort': 'sortProducts',
       'input .slider': 'multiSlider',
