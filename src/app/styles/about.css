@@ -26,28 +26,25 @@
 .data__product {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
+  align-items: center;
   width: 100%;
 }
 
-.galery__product {
-  width: 25%;
+.galery__products {
+  width: 40%;
 }
 
 .img_one, .img_two {
-  width: 80%;
+  width: 60%;
   border: 1px solid #DA4358;
   border-radius: 0.5rem;
   cursor: pointer;
 }
 
 .img__product {
-  /* width: 20%;
-  height: 100%;
-  border-radius: 0.5rem;
-  border: 0.2px solid black; */
-
-  max-width: 660px;
+  max-height: 40vh;
+  width: auto;
+  max-width: 100%;
 }
 
 .info__product {

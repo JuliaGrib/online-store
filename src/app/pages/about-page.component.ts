@@ -55,7 +55,6 @@ class AboutPageComponent extends WFMComponent {
     const price = (document.querySelector('.price__product')) as HTMLElement
     const add = (document.querySelector('.add__product')) as HTMLButtonElement
     const drop = (document.querySelector('.drop__product')) as HTMLButtonElement
-
     const img1 = (document.querySelector('.img_one')) as HTMLImageElement
     const img2 = (document.querySelector('.img_two')) as HTMLImageElement
 
