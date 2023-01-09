@@ -132,7 +132,7 @@ export const productsList: IProductList = {
             "id" : 10,
             "title" : "Table Abby Gold",
             "description" : "Pantograph, with linen box and pillows included, Scandinavian style",
-            "price" : 416,
+            "price" : 527,
             "brand" : "Abby",
             "category" : "Table",
             "thumbnail" : "../assets/products/table/1/mini.jpg",
