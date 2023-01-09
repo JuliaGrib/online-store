@@ -26,6 +26,13 @@ export const buyNow = function() {
   const validDataCardInput = (document.createElement('input')) as HTMLInputElement
   const cvvDataCard = document.createElement('div');
   const cvvDataCardInput = (document.createElement('input')) as HTMLInputElement
+  const errorName = document.createElement('span')
+  const errorPhone = document.createElement('span')
+  const errorAddress = document.createElement('span')
+  const errorEmail = document.createElement('span')
+  const errorCardNumber = document.createElement('span')
+  const errorValitThru = document.createElement('span')
+  const errorCvv = document.createElement('span')
 
   buyNow.classList.add('buy-now__cart');
   modal.classList.add('modal__cart');
@@ -98,9 +105,13 @@ export const buyNow = function() {
   personalDetails.appendChild(address);
   personalDetails.appendChild(email);
   personName.appendChild(personNameInput)
+  personName.appendChild(errorName)
   phoneNumber.appendChild(phoneNumberInput)
+  phoneNumber.appendChild(errorPhone)
   address.appendChild(addressInput)
+  address.appendChild(errorAddress)
   email.appendChild(emailInput)
+  email.appendChild(errorEmail)
   cardDetails.appendChild(titleCard)
   cardDetails.appendChild(dataCard)
   cardDetails.appendChild(numberCard)
@@ -108,10 +119,13 @@ export const buyNow = function() {
   dataCard.appendChild(otherDataCard)
   numberCard.appendChild(imgCard)
   numberCard.appendChild(numberCardInput)
+  numberCard.appendChild(errorCardNumber)
   otherDataCard.appendChild(validDataCard);
   otherDataCard.appendChild(cvvDataCard);
   validDataCard.appendChild(validDataCardInput);
+  validDataCard.appendChild(errorValitThru);
   cvvDataCard.appendChild(cvvDataCardInput);
+  cvvDataCard.appendChild(errorCvv);
 
 
   close.innerHTML = "x"
@@ -129,9 +143,12 @@ export const buyNow = function() {
     if(NAME_REGEXP.test(this.value)) {
       personNameInput.classList.remove('border-color-red')
       personNameInput.classList.add('border-color-green')
+      errorName.innerHTML = ""
     } else {
       personNameInput.classList.remove('border-color-green')
       personNameInput.classList.add('border-color-red')
+      errorName.innerHTML = "This field must contain at least 2 words"
+
     }
   })
 
@@ -146,9 +163,11 @@ export const buyNow = function() {
     if(PHONE_REGEX.test(this.value) && this.value.length > 9) {
       phoneNumberInput.classList.remove('border-color-red')
       phoneNumberInput.classList.add('border-color-green')
+      errorPhone.innerHTML = ""
     } else {
       phoneNumberInput.classList.remove('border-color-green')
       phoneNumberInput.classList.add('border-color-red')
+      errorPhone.innerHTML = "This field must contain a phone number in the format +123456789"
     }
   })
 
@@ -157,9 +176,11 @@ export const buyNow = function() {
     if(ADDRESS_REGEXP.test(this.value)) {
       addressInput.classList.remove('border-color-red')
       addressInput.classList.add('border-color-green')
+      errorAddress.innerHTML = ""
     } else {
       addressInput.classList.remove('border-color-green')
       addressInput.classList.add('border-color-red')
+      errorAddress.innerHTML = "This field must contain at least 3 words"
     }
   })
 
@@ -169,9 +190,11 @@ export const buyNow = function() {
     if(EMAIL_REGEXP.test(this.value)) {
       emailInput.classList.remove('border-color-red')
       emailInput.classList.add('border-color-green')
+      errorEmail.innerHTML = ""
     } else {
       emailInput.classList.remove('border-color-green')
       emailInput.classList.add('border-color-red')
+      errorEmail.innerHTML = "This field must contain an email in the format qwerty@asd.com"
     }
   })
 
@@ -200,9 +223,11 @@ export const buyNow = function() {
     if(this.value.length == 18) {
       numberCardInput.classList.remove('border-color-red')
       numberCardInput.classList.add('border-color-green')
+      errorCardNumber.innerHTML = ""
     } else {
       numberCardInput.classList.remove('border-color-green')
       numberCardInput.classList.add('border-color-red')
+      errorCardNumber.innerHTML = "Error"
     }
   })
 
@@ -216,16 +241,20 @@ export const buyNow = function() {
     if(CVV_REGEXP.test(this.value)) {
       cvvDataCardInput.classList.remove('border-color-red')
       cvvDataCardInput.classList.add('border-color-green')
+      errorCvv.innerHTML = ""
     } else {
       cvvDataCardInput.classList.remove('border-color-green')
       cvvDataCardInput.classList.add('border-color-red')
+      errorCvv.innerHTML = "Error"
     }
   })
 
   validDataCardInput.addEventListener('keydown', function(e: KeyboardEvent) {
     const value: string = this.value.replace(/\s+/g, '');
+
     const isBackspace: boolean = e.key === 'Backspace'; 
-    if ((e.key.length === 1 && /^[^\d\s]+$/.test(e.key)) || (!isBackspace && value.length === 16)) {
+    if ((e.key.length === 1 && /^[^\d\s]+$/.test(e.key)) || (!isBackspace && value.length === 5)) {
+
         e.preventDefault();
         return false;
     }
@@ -235,17 +264,26 @@ export const buyNow = function() {
       arr.pop();
       this.value = arr.join('')
     }
-    if(this.value[0] != '1') {
+    if((+this.value[0]) > 1){
       const arr: string[] = this.value.split('')
       arr.pop();
       this.value = arr.join('')
     }
-    if(this.value.length == 5) {
+
+    if((+this.value[1]) > 2) {
+      const arr: string[] = this.value.split('')
+      arr.pop();
+      this.value = arr.join('')
+    }
+
+    if(this.value.length == 4) {
       validDataCardInput.classList.remove('border-color-red')
       validDataCardInput.classList.add('border-color-green')
+      errorValitThru.innerHTML = ""
     } else {
       validDataCardInput.classList.remove('border-color-green')
       validDataCardInput.classList.add('border-color-red')
+      errorValitThru.innerHTML = "Error"
     }
   })
 
