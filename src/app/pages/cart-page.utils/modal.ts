@@ -291,9 +291,12 @@ export const buyNow = function() {
     event.preventDefault;
     const succesArray: NodeListOf<Element> = document.querySelectorAll('.border-color-green')
     if(succesArray.length == 7) {
-      modal.innerHTML = 'Ваш заказ оформлен. Вы будете перенаправлены на главную страницу'
+      modal.innerHTML = 'Your order has been placed. You will be redirected to the main page'
       setTimeout(function() {
-        localStorage.removeItem('productsLocal');
+        const localArr = JSON.parse(localStorage.productsLocal)
+        localArr.products = []
+        localStorage.productsLocal = JSON.stringify(localArr);
+        //localStorage.removeItem('productsLocal');
         location.href='#'
       }, 3000)
     }

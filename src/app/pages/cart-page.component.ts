@@ -46,8 +46,8 @@ class CartPageComponent extends WFMComponent {
       const container = (document.querySelector('.container__cart')) as HTMLElement
       container.innerHTML = /*html*/`
       <div class="empty__cart">
-        <h2>КОРЗИНА ПУСТА</h2>
-        <a class="main-link__cart" href="/">⟵ Вернуться на главную</a>
+        <h2>CART IS EMPTY</h2>
+        <a class="main-link__cart" href="/">⟵ Go back to the main page</a>
       </div>
       `
       return
@@ -227,8 +227,8 @@ class CartPageComponent extends WFMComponent {
           const container = (document.querySelector('.container__cart')) as HTMLElement
           container.innerHTML = /*html*/`
             <div class="empty__cart">
-              <h2>КОРЗИНА ПУСТА</h2>
-              <a class="main-link__cart" href="/">⟵ Вернуться на главную</a>
+              <h2>CART IS EMPTY</h2>
+              <a class="main-link__cart" href="/">⟵ Go back to the main page</a>
             </div>
           `
           const url = new URL(window.location.href)
