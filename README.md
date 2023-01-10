@@ -1,1 +1,1 @@
-[# online-store](https://231globus-juliagrib-online-store.netlify.app/)
+https://231globus-juliagrib-online-store.netlify.app/
